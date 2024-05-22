@@ -1,20 +1,18 @@
 ---
+title:
 author:
-- Milto Miltiadou[^1]
+- Milto Miltiadou*
 - Stuart Grieve
 - Paloma Ruiz Benito
 - Verónica Cruz-Alonso
 - Julen Astigarraga
 - Julián Tijerín Triviño
 - Emily Lines
-bibliography:
-- Bibliography.bib
-date: 30/04/2024
-title: "**User Guide of PlotToSat**"
+
+date: 30/05/2024
+title: "User Guide of PlotToSat; a Tool for Generating Time-series Signatures from Sentinel-1 and Sentinel-2 at 3 at field-based plots"
 ---
 
-::: titlepage
-:::
 
 # Introduction {#sec:Introduction}
 
