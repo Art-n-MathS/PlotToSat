@@ -9,7 +9,7 @@ author:
 - Emily Lines
 bibliography:
 - Bibliography.bib
-date: 30/04/2024
+date: 30/08/2023
 title: "**User Guide of PlotToSat**"
 ---
 
@@ -34,29 +34,142 @@ Link to paper: [\<url\>](<url>){.uri}
 The sample data are randomly created; they are well-distributed and lie
 within Peninsular Spain.
 
-# Installation {#sec:Installa1}
+# Introduction {#sec:Introduction}
 
-This user guide assumes basic knowledge of Google Earth Engine (GEE) and
-Python. A GEE account is also required:
+## Motivation
+
+Forest ecologists often gather data from predetermined sites known as
+plots during fieldwork. These plots are usually circular and are defined
+by a geo-location and a radius. Analysing data from these plots helps
+ecologists gain a better understanding of ecosystem services and
+dynamics. Many studies have incorporate Earth Observation (EO) data,
+which includes satellite images and other remote sensing data, to
+enhance their understanding of ecosystems. EO data provides valuable
+information about various environmental factors on a larger scale, but
+accessing and downloading these images can be time-consuming and
+challenging, particularly when dealing with a large number of plots.
+
+To address this issue and enhance scalability of ecosystem studies, we
+have developed the tool 'PlotToSat.' PlotToSat is designed to bridge the
+gap between plot-based data and Earth Observation data. PlotToSat aims
+to make the process of extracting EO data at thousands of plot locations
+more efficient and simplified. It will enable ecologists to better
+analyse the relationships between local plot data and broader
+environmental patterns.
+
+## Software Functionality
+
+\*\*\* PlotToSat takes as input from a few to hundred of thousands of
+plot data located across various geographical regions and exports Earth
+Observation data from multiple collections at each plot. Identifiers are
+added to both plot and exported data and a script is provided for fusing
+them so that plot names are retained. \"PlotToSat\" first computes the
+pixelwise mean value for each calendar month, effectively reducing each
+collection to twelve images; each image has multiple bands but each
+image corresponds to the mean of a specific month. Following this, it
+calculates the mean and standard deviation of the pixel values within
+each plot. For every plot, the function exports twelve values per band
+per collection corresponding to the twelve calendar months for. This
+procedure **creates a spectral-temporal signature for each plot.**
+Spectral-temporal signatures are important because they capture both the
+temporal and spectral dimensions at each plot. This opens up
+possibilities for phenological and time-series related studies. Standard
+deviation is also provided for quality control. Figure
+[5](#fig:workflow){reference-type="ref" reference="fig:workflow"} shows
+the back-end processing workflow of the system, while Figure
+[4](#fig:SPS){reference-type="ref" reference="fig:SPS"} depicts a
+spectral-temporal signature of a plot extracted using PlotToSat. \*\*\*
+
+![To define masks the user needs to first create a dictionary with the
+masks of their interest and then import it into the Manager as shown in
+this figure](img/ProcesingPipelinePlotToSAT.jpg){#fig:processingPipeline
+width="90%"}
+
+<figure id="fig:SPS">
+<figure id="fig:SP1">
+<img src="./img/SpectralTemporalExample.jpg" />
+<figcaption>Example of Spectral Temporal Signature derived from
+Sentinel-2 data with focus on the temporal aspect / annual phenology per
+band</figcaption>
+</figure>
+<figure id="fig:SP2">
+<img src="./img/SpectralTemporalExample2.jpg" />
+<figcaption>Example of spectral-temporal Signature derived from
+Sentinel-2 data with focus on the spectral aspect / spectral signature
+per calendar month</figcaption>
+</figure>
+<figcaption>An illustrative example of a spectral-temporal signature at
+a plot extracted using PlotToSat</figcaption>
+</figure>
+
+Figure [5](#fig:workflow){reference-type="ref" reference="fig:workflow"}
+shows the user-interface. The user-interface is divided into four main
+steps, along with two additional optional steps:
+
+-   Step 1: Define the essential input parameters. These parameters
+    include: (1) a .csv file containing the plot data, (2) the radius of
+    the plot data, (3) the projection of the plot data, and (4) a
+    geometry defining the study area.
+
+-   Optional Step 1: After Step 1, users can decide whether to apply any
+    of the available masks (aspects, surface water, forest disturbance,
+    and land mask) to the selected collections.
+
+-   Step 2: PlotToSat currently supports two EO collections (Sentinel-1
+    and Sentinel-2). Users can choose to use one or both of these
+    collections.
+
+-   Step 3: Define the outputs; the system exports a spectral temporal
+    signature for each plot and each collection into multiple .csv
+    files, which are then stored on the user's Google Drive.
+
+-   Step 4: Download the folder containing the exported .csv files from
+    Google Drive and merge them using the provided script.
+
+-   Optional Step 2: \*\*\* Tuning provided parameters to tackle
+    potential errors that predominantly may occur because Google Earth
+    Engine distributes processing power among its users by implementing
+    processing limitations. Consequently, while users may face three
+    potential errors, we also provide them with suggested solutions
+    e.g., defining how many plots will be exported in each file in Step
+    3.
+
+![User's workflow of the system](img/PlotToSatDiagram.jpg){#fig:workflow
+width="\\textwidth"}
+
+This guide is designed to cater to the needs of various users. In a few
+words, the user guide starts with essential information on how to
+extract information from satellite data at plot locations and gradually
+progresses to more technical details. In Section
+[3](#sec:Installation){reference-type="ref"
+reference="sec:Installation"}, the system's prerequisites are provided.
+Section [4](#sec:instructions){reference-type="ref"
+reference="sec:instructions"} first presents the necessary commands
+required to achieve desirable results. These commands are divided into
+six sections that correspond to the four main steps plus the two
+optional ones explained above and depicted in the workflow diagram
+(Figure [5](#fig:workflow){reference-type="ref"
+reference="fig:workflow"}). Section
+[6](#sec:Techical){reference-type="ref" reference="sec:Techical"} offers
+background information and outlines the pre-processing steps employed
+for each currently supported EO collection. It further explains the
+selection of available masks. The collections, masks, and the Utils
+module can be used as part of the main system or independently for other
+applications. For this reason, Section
+[6](#sec:Techical){reference-type="ref" reference="sec:Techical"}
+provides an overview of the system architecture; how the modules are
+interconnected to assist more experienced users.
+
+# Installation {#sec:Installation}
+
+This user guide assumes basic knowledge of Google Earth Engine and
+Python. It also assumes that users have an account at
 [\<https://code.earthengine.google.com/\>](<https://code.earthengine.google.com/>){.uri}.
-
-[Important note:]{.underline} As per current regulations
-([https://earthengine.google.com/noncommercial/]{.underline}), GEE is
-free to use for non-commercial purposes by researchers, non-profits,
-educators, and government agencies. You can connect GEE to an existing
-Google Cloud Platform (GCP) account. If you need to create a new GCP
-account, a credit card may be requested during sign-up, but this is
-predominantly for verification and not immediate charges. To avoid
-unexpected charges, make sure that the cloud-projects created and used
-is for non-commercial purposes. In any case, please be considerable of
-the usage of GEE resources and cancel faulty tasks (tasks tab available
-on the right hand side of the online Graphical User Interface at
-<https://code.earthengine.google.com/>).
 
 PlotToSat is implemented using the Python API of Google Earth Engine in
 IPython 3 (Jupyter). While Visual Studio Code (VS Code) is recommended
 due to its status as a free, open-source, and cross-platform editor,
-other IDEs should also work but they have not been tested.
+other IDEs should also function well.
 
 The code is compatible with both Linux and Windows machines and is
 available at:
@@ -65,487 +178,328 @@ available at:
 Depending on your environment, you can install the dependencies as
 follows:
 
-``` {#lst:dependancies style="mystyle" label="lst:dependancies"}
-pip install ipython pandas numpy earthengine-api
-    conda install -c conda-forge earthengine-api ipython pandas numpy  
-```
+              pip install ipython pandas numpy earthengine-api
 
-# Introduction {#sec:Introduction}
+              conda install -c conda-forge earthengine-api ipython pandas numpy
 
-Forest ecologists gather data from predetermined sites known as plots.
-Plots are usually circular; defined by a their centre (latitude,
-longitude) and a radius. A plot network consists from a few to hundreds
-of thousands of plots, which are systematically placed to represent the
-forests of region e.g., a country. PlotToSat takes as input a plot
-network, and for each circular plot it extracts time-series of
-Sentinel-1 and/or Sentinel-2 collections for a given year --collections
-typically refer to organised sets of satellite data. For every plot,
-PlotTosat exports twelve values per band per collection corresponding to
-the twelve calendar months. Standard deviation is also provided for
-quality control.
-
-Figure [1](#fig:workflow){reference-type="ref" reference="fig:workflow"}
-shows the user-interface. The user-interface is divided into four main
-steps, along with two additional optional steps:
-
--   Step 1: Define the essential input parameters and create an instance
-    of PlotToSat. The compulsory input parameters required for creating
-    the instance are: (1) a CSV file that lists the plot locations of a
-    plot network, (2) the radius of the plots, (3) the projection of the
-    plot data, (4) a geometry defining the study area, and (5) the year
-    of interest.
-
--   Optional Step 1: After Step 1, users can decide whether to apply any
-    of the available masks (aspects, surface water, forest disturbance,
-    and land mask) to the selected collections.
-
--   Step 2: PlotToSat currently supports two EO collections (Sentinel-1
-    and Sentinel-2). Users can choose to add/use one or both of these
-    collections.
-
--   Step 3: Define the outputs (folder name and start of filenames);
-    initially PlotToSat exports the time-series into multiple CSV files,
-    which are stored on the user's Google Drive.
-
--   Step 4: Download the folder containing the exported CSV files from
-    Google Drive and merge them using the provided script.
-
--   Optional Step 2: Tuning provided parameters to tackle potential
-    errors that predominantly occur because Google Earth Engine (GEE)
-    distributes processing power among its users by implementing
-    processing limitations. While users may face GEE errors, we
-    recommend solutions e.g., defining how many plots will be exported
-    in each file in Step 3.
-
-![User's workflow of the system](img/PlotToSatDiagram.jpg){#fig:workflow
-width="\\linewidth"}
+# Instructions: How to extract spectral-temporal signatures at plot locations  {#sec:instructions}
 
 The system is modular, consisting of multiple classes, yet the user's
-interaction is primarily with the PlotToSat class. Each class (e.g.,
-*Sentinel-1* class) can function autonomously for other applications and
-in the Github repository
-(\<<https://github.com/Art-n-MathS/PlotToSat>\>) there is a test-case
-for each class. [Only functions included in the associated test cases
-should be used, as other functions may not be thoroughly tested and may
-not behave as expected.]{.underline}
+interaction is primarily with the Manager class. As explained in Section
+[7](#sec:Advanced){reference-type="ref" reference="sec:Advanced"}, each
+class can function autonomously for other applications. In this section,
+the commands for extracting EO data at plot locations are supplied.
 
-The guide explains the User Interface of PlotToSat. For back-end
-information and image pre-processing steps, please refer to the
-associated paper.
-
-# Instructions: How to extract time-series at plot locations  {#sec:instructions}
-
-Two test cases are provided for using the *PlotToSat* class. Test case 1
-(Section [4.1](#sec:compcom){reference-type="ref"
-reference="sec:compcom"}) contains the minimal information that needs to
-be provided, while test case 2 (Section
-[4.2](#sec:optCom){reference-type="ref" reference="sec:optCom"})
-includes the optional commands. The data exported on Google Drive are
-often divided into multiple subgroups. Section
-[4.3](#sec:mergingFiles){reference-type="ref"
+\*\*\*To demonstrate the simplicity of PlotToSat, \*\*\* Figure
+[6](#fig:EssentialCode){reference-type="ref"
+reference="fig:EssentialCode"} provides an example script encompassing
+the essential commands requiring user definition to acquire from
+multiple plots. It contains steps 1, 2 and 3 depicted in the workflow
+(Figure [5](#fig:workflow){reference-type="ref"
+reference="fig:workflow"}) and explained in Sections
+[4.1](#sec:defPar){reference-type="ref" reference="sec:defPar"},
+[4.2](#sec:addCols){reference-type="ref" reference="sec:addCols"} and
+[4.3](#sec:defOuts){reference-type="ref" reference="sec:defOuts"}
+respectively. \*\*\*The code is broken down and explained in Sections
+[4.1](#sec:defPar){reference-type="ref" reference="sec:defPar"},
+[4.2](#sec:addCols){reference-type="ref" reference="sec:addCols"} and
+[4.3](#sec:defOuts){reference-type="ref" reference="sec:defOuts"}.
+\*\*\* Section [4.4](#sec:mergingFiles){reference-type="ref"
 reference="sec:mergingFiles"} explains how to merge the files exported
-in Google Drive.
+and an example script is also provided in that section. Sections
+[4.5](#sec:maskscript){reference-type="ref" reference="sec:maskscript"}
+and [4.6](#sec:errors){reference-type="ref" reference="sec:errors"}
+provide the optional options and a complete example is provided after
+these sections.
 
-## Test Case 1: compulsory commands {#sec:compcom}
+![A complete example script for extracting EO data at plot locations
+using PlotToSat. The code is broken down and explained in Sections
+[4.1](#sec:defPar){reference-type="ref" reference="sec:defPar"},
+[4.2](#sec:addCols){reference-type="ref" reference="sec:addCols"} and
+[4.3](#sec:defOuts){reference-type="ref" reference="sec:defOuts"}
+](img/EssentialCode.jpg){#fig:EssentialCode width="75%"}
 
-The simplicity of PlotToSat is demonstrated in Listing
-[\[lst:testCode1\]](#lst:testCode1){reference-type="ref"
-reference="lst:testCode1"}. It runs in an iPython notebook and provides
-the code for test case 1 (code available in the associated
-*PlotToSat_test1.ipynb* file). The code is broken down and explained in
-Sections [4.1.1](#sec:defPar){reference-type="ref"
-reference="sec:defPar"}, [4.1.2](#sec:addCols){reference-type="ref"
-reference="sec:addCols"} and [4.1.3](#sec:defOuts){reference-type="ref"
-reference="sec:defOuts"}.
+## Definition of input parameters {#sec:defPar}
 
-    [style=mystyle, caption={This is the "PlotToSat\_test1.ipynb" file, which contains a complete example code for extracting time-series EO data at plot locations using PlotToSat.} , label=lst:testCode1]
-        # import all the necessary libraries
-        %run PlotToSat.ipynb
-        
-        # Define study region
-        polygon = ee.Geometry.Polygon(
-            [[[-6.7820312500000135, 37.744682241748094],
-              [-1.1570312500000135, 37.32651387565316],
-              [0.1613281249999865, 42.25294129803316],
-              [-7.3093750000000135, 43.349172765639516]]])
-        
-        # Create a dictionary that holds the relevant plot information
-        fieldData = {
-            "csvfilename"         : "./samplePlots.csv",
-            "proj"                : "EPSG:3042",
-            "radius"              : 30,
-            "xcol"                : "CX",    
-            "ycol"                : "CY",
-            "outPlotFileWithIDs" : r"plotsWithIDs\SpainIDs_1.csv"
-        }
-        
-        # Specify the year of interest
-        year = 2019
-        
-        # Create an instance of the Manager
-        myPlotToSat = PlotToSat(polygon,fieldData,year) 
-        
-        # Add Earth Observation Collections of interest
-        myPlotToSat.addCollection("sentinel-1", True) 
-        myPlotToSat.addCollection("sentinel-2", 50  ) 
-        
-        #Definition and exportation of outputs
-        myPlotToSat.exportFeatures("folderSpain1", "outfeaturevectors")  
+The working directory should match the location of the .ipynb files for
+PlotToSat. To begin, generate a new .ipynb file and **run
+\"Manager.ipynb\"** to **import all the necessary libraries** as follow:
 
-### Definition of input parameters and creation of a PlotToSat instance {#sec:defPar}
+           %run Manager.ipynb
 
-To begin, generate a new IPython Notebook (.ipynb file) and **run
-\"PlotToSat.ipynb\"** to **import all the necessary libraries**. The new
-IPython Notebook should be in the same directory as the IPython
-Notebooks of PlotToSat. When the libraries are loaded, you are requested
-to login to your GEE account and provide access to PlotToSat. Please do
-NOT select \"Use read-only scopes\" as PlotToSat exports CSV files in
-your Google Drive. Press continue and allow PlotToSat to \"View and
-manage your Google Earth Engine data\" and \"Manage your data and
-permission in Cloud Storage and see the email address for you Google
-Account\". This will allows you to use GEE through the Python API of
-GEE. If you do not have a GEE account, Google is requesting you to
-create a Google Cloud account first and verification is done by
-providing a credit card. As long as PlotToSat and, consequently GEE, are
-used for non-commercial purposes, as per current regulations, there are
-no associated charges. More info at Section Installation.
+As mentioned earlier, users engage with the Manager only. To establish a
+Manager instance, you'll require three inputs:
 
-``` {#lst:region style="mystyle" label="lst:region"}
+1.  A polygon that defines the study area
 
-    \par Users interact with \textit{PlotToSat} class. To establish an instance of the \textit{PlotToSat} class (Line 25 in Listing \ref{lst:testCode1}), three inputs are required:
-    \begin{enumerate}
-        \item A polygon that defines the study area
-        \item A dictionary that contains all the relevant information about the field data
-        \item The specific year for exporting the spectral-temporal signatures
-    \end{enumerate}
-  
+2.  A dictionary that contains all the relevant information about the
+    field data
 
-    
-    \par \textbf{A polygon is required for defining the study region.} Here two examples are given. The first example retrieves a database containing all countries and sets Spain as the study region:
-    \begin{lstlisting}[style=mystyle,  label=lst:regionCountry]
-    countries = ee.FeatureCollection('USDOS/LSIB_SIMPLE/2017')
-    polygon = countries.filter(ee.Filter.eq('country_na', 'Spain')) 
-```
+3.  The specific year for exporting the spectral-temporal signatures
 
-The second example employs a series of coordinates to define a polygon:
+**Definition of Study area**: Defining the study area is crucial to
+prevent processing an excessive amount of unnecessary data. This is
+accomplished by providing a polygon. Two examples are given. The initial
+example retrieves a database containing all countries and designates
+Spain as the area of interest:
 
-``` {#lst:regionCoordinates style="mystyle" label="lst:regionCoordinates"}
-polygon = ee.Geometry.Polygon(
-              [[[-4.605333211514093, 40.525024941579744],
-              [-6.022569539639093, 39.473043697488094],
-              [-4.506456258389093, 38.41352077057141],
-              [-2.6717394615140933, 39.31172562670761]]]) 
-```
+           countries = ee.FeatureCollection('USDOS/LSIB_SIMPLE/2017')
+           polygon = countries.filter(ee.Filter.eq('country_na', 'Spain'))
 
-The polygon of the 2nd example was generated using the \"*Draw Shape*\"
-feature in the Graphical User Interface (GUI) of GEE. The drawn polygon
-is saved in the Imports section, where the corresponding JavaScript code
-is provided (Figure [4](#fig:GEEPol){reference-type="ref"
-reference="fig:GEEPol"}). To translate the JavaScript code into Python
-API code, remove the 'var' declaration, the code enclosed between
-\"/\*\" and \"\*/\" (inclusive of \"/\*\" and \"\*/\"), and the
-semicolon \";\" at the end.
+The second example employs a series of coordinates to define a polygon.
+This polygon was generated using the \"Draw Shape\" feature in the
+Graphical User Interface (GUI) of Google Earth Engine. The shape created
+was saved in the Imports section, where the corresponding JavaScript
+code is provided (See example at Figure
+[7](#fig:GEEPol){reference-type="ref" reference="fig:GEEPol"}). To
+translate this JavaScript code into Python API code, the \"var\"
+declaration, the color-related code enclosed between \"/\*\" and
+\"\*/\", and the semicolon \";\" at the end were omitted. The result is
+as follows:
 
-<figure id="fig:GEEPol">
-<figure id="fig:RGB_G0_2019_1">
-<img src="./img/drawpolygon.jpg" />
-<figcaption>How to draw a polygon in GEE</figcaption>
-</figure>
-<figure id="fig:RGB_G1_2019_1">
-<img src="./img/drawpolygon1.jpg" />
-<figcaption>How to find the JavaScript code of polygon</figcaption>
-</figure>
-<figcaption>Drawing a polygon and finding its coordinates to use them in
-PlotToSat. </figcaption>
-</figure>
+           polygon = ee.Geometry.Polygon(
+                  [[[33.14051796676924, 35.11082029560011],
+                  [32.90980507614424, 35.07486329511283],
+                  [32.96473671676924, 34.948889010363565]]])
 
-**The plot information are stored in a dictionary**, which is a data
-structure that stores multiple data in pairs of key-value. The key
-\"*csvfilename*\" is associated with the file name and directory of the
-CSV file containing the plot data. The key \"*proj*\" refers to the
-geographic projection of the plot data. The key \"*radius*\" determines
-the radius of the plots; the unit of measurement is in meters. The keys
-\"*xcol*\" and \"*ycol*\" are associated with the names of the columns
-containing the x and y coordinates of the plots' centres. The key
-\"*outPlotFileWithIDs*\" is associated with the name and directory of a
-file to be exported. This exported file contains the plot information
-but it also attaches identifiers to them. This file with the identifiers
-is used for merging the time-series files into one CSV file, along with
-the plot information. [At each run, please provide a different file name
-for key \"outPlotFileWithIDs\"; otherwise, PlotToSat will overwrite an
-existing file with the same name, and merging time-series with plot
-information will not be possible.]{.underline} All the keys of the
-dictionary are mandatory. Here is an example of defining them:
+![How to find the coordinates of a drawn polygon on Google Earth
+Engine](img/GettingPolygon.jpg){#fig:GEEPol width="75%"}
 
-``` {#lst:inputs style="mystyle" label="lst:inputs"}
-fieldData = {
-          "csvfilename"        : "./samplePlots.csv",
-          "proj"               : "EPSG:3042",
-          "radius"             : 30,
-          "xcol"               : "CX",    
-          "ycol"               : "CY",
-          "outPlotFileWithIDs" : r"plotsWithIDs\SpainIDs_1.csv"
-    }   
-```
+**Create a dictionary that holds the relevant plot information.** The
+\"csvfilename\" parameter specifies the name and directory path of the
+file containing the plot data in .csv file format. The \"proj\"
+parameter designates the projection used for the plot data. \*\*\* The
+'radius' parameter determines the radius of each plot, and the unit of
+measurement is in meters as is the case with all distances measured in
+Google Earth Engine. \*\*\* The \"xcol\" and \"ycol\" parameters
+indicate the columns supplying the x and y coordinates, respectively, of
+the centre of each plot. All these parameters are mandatory. Here is an
+example of defining them:
+
+           fieldData = {
+                  "csvfilename"   : "./samplePlots.csv",
+                  "proj"          :"EPSG:3042",
+                  "radius"        :30,
+                  "xcol"          :"CX",    
+                  "ycol"          :"CY"
+           }
 
 **Specify the year of interest.** PlotToSAT processes data for a single
-year in each run. The year of interest must be defined and imported into
-the constructor of the *PlotToSat* class. In the code snippet below, we
-define a variable that contains a potential year of interest.
+year in each run. The desired year of interest must be defined and
+imported into the constructor of the Manager class. In the code snippet
+below, we define a variable that contains a potential year of interest.
 
-``` {#lst:setYear style="mystyle" label="lst:setYear"}
-year = 2017 
-```
+           year = 2017
 
-Once the three inputs are defined, you can **create an instance of
-PlotToSat** as follows:
+Once the three inputs are defined as explained above, you can **create
+an instance of the Manager** as follows:
 
-``` {#lst:defManager style="mystyle" label="lst:defManager"}
-myPlotToSat = PlotToSat(polygon,fieldData,year) 
-```
+           myManager = Manager(polygon,fieldData,year)
 
-### Adding Earth Observation collections {#sec:addCols}
+## Adding Earth Observation collections {#sec:addCols}
 
 Once the Manager is constructed, the user can add the collections of
 their interest. If the available collections are not known, the
-following command can be used to print the available collections, their
-call labels, and the GEE collections fetched:
+following command can be utilised. It prints the available collections,
+their call labels, and the GEE collections to be fetched:
 
-``` {#lst:printAveCol style="mystyle" label="lst:printAveCol"}
-myPlotToSat.printAvailableCollections()
-```
+           myManager.printAvailableCollections()
 
 This should yield the following outcome since the system currently
 supports two collections:
 
-``` {#lst:output style="mystyle" label="lst:output"}
-There are  2 collections available within the system:
-   label                   collection
-   0  sentinel-1            COPERNICUS/S1_GRD
-   1  sentinel-2  COPERNICUS/S2_SR_HARMONIZED 
-```
+           There are  2 collections available within the system:
+           label                   collection
+           0  sentinel-1            COPERNICUS/S1_GRD
+           1  sentinel-2  COPERNICUS/S2_SR_HARMONIZED
 
 The users select collections using the function
-*addCollection(\<labelOfCollection\>*, \<parameter\>). The system
-currently supports the Sentinel-1 and Sentinel-2 collections, with the
-respective labels *\"sentinel-1*\" and *\"sentinel-2\"*. The
-*\<parameter\>* argument serves a different purpose for each collection.
-For Sentinel-2, it's an integer defining the upper limit threshold of
-cloud coverage. Images exceeding this threshold are discarded. It's
-worth mentioning that additional cloud and shadow masking is applied to
-all images. For Sentinel-1, the input parameter is a Boolean value (True
-or False), which determines whether the aspect maps will be applied; if
-the elevation gradient is high, shaded areas usually appear on certain
-slopes. These shaded areas can be masked out using the aspect map.
-Detailed information about the available collections and pre-processing
-steps are provided at the relevant paper [@miltiadou2024PlotToSat].
+addCollection(\<labelOfCollection\>, \<parameter\>). As previously
+stated, the system currently supports two collections: Sentinel-1 and
+Sentinel-2, with the respective labels 'sentinel-1' and 'sentinel-2'.
+The \<parameter\> argument varies for each collection. For Sentinel-2,
+it's an integer that defines the cloud coverage. It's worth mentioning
+that additional cloud and shadow masking is applied to all images, as
+explained in Section [6.2](#sec:s2){reference-type="ref"
+reference="sec:s2"}. For Sentinel-1, the input parameter is a Boolean
+value (True or False), which determines whether the aspect maps will be
+applied; if the elevation gradient is high, shaded areas usually appear
+on certain slopes. These shaded areas may be masked out using the aspect
+map (further details are provided in Section
+[6.1](#sec:s1){reference-type="ref" reference="sec:s1"}).
 
-Users have the choice to use either one or both collections. Here is an
-example of how to add both collections to the *PlotToSat* class with
-aspect filters enabled for Sentinel-1 and an upper limit threshold of
-50% cloud coverage for Sentinel-2:
+Users have the choice to use either one or both collections. \*\*\* Here
+is an example of how to add both collections to the Manager with aspect
+filters for Sentinel-1 and a threshold of 50% cloud coverage for
+Sentinel-2:\*\*\*
 
-``` {#lst:addCols style="mystyle" label="lst:addCols"}
-myPlotToSat.addCollection("sentinel-1", True) 
-    myPlotToSat.addCollection("sentinel-2", 50  )  
-```
+           myManager.addCollection("sentinel-1", True) 
+           myManager.addCollection("sentinel-2", 50  ) 
 
-### Definition and exportation of outputs {#sec:defOuts}
+## Definition and exportation of outputs {#sec:defOuts}
 
-Finally, we execute the following command to **fetch the data, interpret
-them, and export the time-series signatures as feature vectors.** The
-command \"*myPlotToSat.exportFeatures(\<a\>,\<b\>)*\" requires two
-inputs: (a) the folder name where the data will be exported on the
-user's Google Drive, and (b) the starting name for the exported feature
-vectors. If the specified folder does not exist, GEE will create it.
-[It's important to note that GEE is unable to generate subfolders.
-Additionally, due to parallel processing, sometimes GEE creates two
-folders with the same name and shares the exported files between
-them.]{.underline}
+Finally, we execute the following command to retrieve, interpret, and
+export the spectral-temporal signatures as feature vectors. The
+\"exportFeatures\" command requires two inputs: (1) the folder name
+where the data will be exported on the user's Google Drive, and (2) the
+starting name for the exported feature vectors. If the specified folder
+does not already exist, GEE will create it. It's important to note that
+GEE is unable to generate subfolders.
 
-``` {#lst:addCols style="mystyle" label="lst:addCols"}
-myPlotToSat.exportFeatures("gdrivefolder", "outfeaturevectors") 
-```
+            myManager.exportFeatures("gdrivefolder", "outfeaturevectors")   
 
-By executing the above command, a series of CSV files will be exported
-within the \"*gdrivefolder*\" in the user's Google Drive. [Please note
-that this is not instantaneous.]{.underline} You can check the process
-of the submitted GEE requests at the Task tab on the right hand side of
-the online Graphical User Interface
-(<https://code.earthengine.google.com/>). By default PlotToSat exports
-time-series for 400 plots in each exported CSV file; changing this
-values is an optional command included in Test case 2 (Section
-[4.2.2](#sec:errors){reference-type="ref" reference="sec:errors"}). For
-instructions on merging the series of CSV files, please refer to Section
-[4.3](#sec:mergingFiles){reference-type="ref"
+By executing the above command, a series of .csv files will be generated
+within the \"gdrivefolder\" of the user's Google Drive. The system
+divides the process into multiple subprocesses, producing multiple
+output files, to mitigate possible errors, as explained in Section
+[4.6](#sec:errors){reference-type="ref" reference="sec:errors"}. For
+instructions on merging the series of .csv files, please refer to
+Section [4.4](#sec:mergingFiles){reference-type="ref"
 reference="sec:mergingFiles"}.
 
-## Test Case 2: Optional commands {#sec:optCom}
+The essential commands described so far for exporting spectral-temporal
+signatures from Sentinel-1 and Sentinel-2 collections at plot locations
+are provided in a complete script in Figure
+[6](#fig:EssentialCode){reference-type="ref"
+reference="fig:EssentialCode"}.
 
-Listing [\[lst:testCode2\]](#lst:testCode2){reference-type="ref"
-reference="lst:testCode2"} provides the code for test case 2 (code
-available in the associated *PlotToSat_test2.ipynb* file), which
-includes the optional commands of PlotToSat. The optional commands added
-from test case 1 to test case 2 are explained in Sections
-[4.2.1](#sec:maskscript){reference-type="ref"
-reference="sec:maskscript"} and
-[4.2.2](#sec:errors){reference-type="ref" reference="sec:errors"}.
+## Downloading and merging exported files {#sec:mergingFiles}
 
-    [style=mystyle, caption={This is the "PlotToSat\_test1.ipynb" file, which contains a complete example code for extracting time-series EO data at plot locations using PlotToSat.} , label=lst:testCode2]
-        # Include these lines and comment out "ee.Authenticate()" after the 
-        # first use to avoid authentication at each run.
-        import ee
-        ee.Authenticate()
-        ee.Initialize()
-        import sys
-        
-        # import all the necessary libraries
-        %run PlotToSat.ipynb
-        
-        # By default recursion is 1000. By increasing it PloToSat can handle 
-        # more plot data at once but you are doing it at your own risk as
-        # raising it too much could cause your personal computer to crash
-        sys.setrecursionlimit(10000)
-        
-        # Definition of Study area
-        countries = ee.FeatureCollection('USDOS/LSIB_SIMPLE/2017')
-        polygon = countries.filter(ee.Filter.eq('country_na', 'Spain'))
-        
-        # Create a dictionary that holds the relevant plot information
-        fieldData = {
-            "csvfilename"         : "./samplePlots.csv",
-            "proj"                : "EPSG:3042",
-            "radius"              : 25,
-            "xcol"                : "CX",    
-            "ycol"                : "CY",
-            "outPlotFileWithIDs"  : r"plotsWithIDs\SpainIDs_2.csv"
-        }
-        
-        # Specify the year of interest
-        year = 2020
-        
-        # Create an instance of the PlotToSat class
-        myPlotToSat = PlotToSat(polygon,fieldData,year) 
-        
-        # With this command you can see all the supported collections and the
-        # associated labels needed for adding them into the PlotToSat instance
-        myPlotToSat.printAvailableCollections()
-        
-        # Example of defining the optional masks
-        masks = {
-            "gsw"       : 30, 
-            "lmask"     : 30, 
-            "forestMask": {
-                "buffer"   :30, 
-                "startDate":'2000-01-01', 
-                "endDate"  :'2019-12-31'
-                }
-            } 
-        myPlotToSat.setMasks(masks)
-        
-        # GEE limits processing of data, so PloToSat divides plots data into 
-        # groups. The default size of a group is 400 plots. A bigger number 
-        # produces less files to be merged and uses less GEE requests. But if 
-        # it is too big GEE returns an ERROR. So some testing is required here 
-        # to tune the sampling size. 
-        myPlotToSat.setSampling(300)
-        
-        # Adding Earth Observation Collections
-        myPlotToSat.addCollection("sentinel-1", False) 
-        myPlotToSat.addCollection("sentinel-2", 50  ) 
-        
-        # Definition and exportation of outputs
-        myPlotToSat.exportFeatures("folderSpain2", "r25_2020")  
-        
-        # Command for re-running a subgroup of plots in case of time-out Errors
-        myPlotToSat.exprtFeaturesMinMax("folderSpain2","r25_2020",300,600)   
+This section focuses on the merging of multiple files generated by the
+system into a single file. As mentioned in Section
+[4.3](#sec:defOuts){reference-type="ref" reference="sec:defOuts"}, the
+user specifies the name of a folder to which the generated .csv files
+are exported. Users need (1) to download this folder from their Google
+Drive and unzip its contents. Please note that, sometimes, GEE may
+create two folders with the same name and distribute the generated .csv
+files across both folders. This occurs due to GEE's concurrent data
+processing. In such cases, users must download both folders and merge
+their contents before proceeding with the script for file merging.
 
-### Available optional masks {#sec:maskscript}
+Additionally, users should: (2) Locate the exported files named
+\"FieldDataWithIdentifiers.csv\" and \"SamplingSize.txt\". These files
+are created in the same locations as the .ipynb files within the
+PlotToSat framework. The first file duplicates the imported plot data
+but includes an additional column labeled \"indexField\", which contains
+identifiers used for merging the plot data with the exported EO data.
+The second file contains the number of plots interpreted in each
+iteration. Please note that the corresponding exported .csv files may
+have fewer columns due to masked-out or defective pixels.
 
-Masks can be used to reduce noise within the EO collections. The chosen
-optional masks are applied to all the EO collections added to the
-instance of *PlotToSat* (Section
-[4.1.2](#sec:addCols){reference-type="ref" reference="sec:addCols"}),
-and they remain constant across different dates. Before masking the EO
-data, a user-defined buffer is applied to each mask individually, with
-each mask type having its own unique buffer. The related technical
-information about the available masks with examples are provided in the
-associated paper [@miltiadou2024PlotToSat].
+The merging script assumes that no errors occurred during the
+exportation process and that the user intends to merge all the .csv
+files into a single file. Figure
+[8](#fig:MergingCsvFiles){reference-type="ref"
+reference="fig:MergingCsvFiles"} provides an illustrative overview of
+how the data is vertically and horizontally merged into a single .csv
+file and Figure [9](#fig:MergingCode){reference-type="ref"
+reference="fig:MergingCode"} provides a complete code example of how to
+merge the exported .csv files. It's important to note that there might
+be occasions when certain processes fail or the user wishes to merge
+specific exported files. In such cases, users have the option to utilise
+the dataframes provided by the pandas Python library to merge the files.
 
-The user creates a dictionary containing the masks of interests. The
-dictionary may contain from zero to multiple masks. The masks'
-dictionary is added to an already created instance of the class
-*PlotToSat* (e.g., *myPlotToSat* instance, Section
-[4.1.1](#sec:defPar){reference-type="ref" reference="sec:defPar"}) using
-this command *myPlotToSat.setMasks( \<masksDictionary\>)*.
+![Ways of merging exported .csv files: vertically and
+horizontally](img/MergingCsvFiles.jpg){#fig:MergingCsvFiles width="55%"}
 
-Table [1](#tab:Masks){reference-type="ref" reference="tab:Masks"}
-provides a summary of the available masks, including their associated
-labels and the input parameters required for each mask to be added to
-the masks' dictionary. For each mask of interest you need (1) its
-corresponding label and (2) a buffer value. To define the forest loss
-mask though, a dictionary is required as input; the dictionary should
-contain the start and end date of the forest loss events that you wish
-to mask ([note: only years are used]{.underline}), along with the
-buffer.
+![This is a complete example script demonstrating how to merge all the
+exported .csv files into one](img/MergingCode.jpg){#fig:MergingCode
+width="90%"}
+
+## Available masks {#sec:maskscript}
+
+\*\*\* The following masks may be applied; ground surface water, land,
+forest loss, ascending aspects and/or descending aspects. Section
+[6.3](#sec:masks){reference-type="ref" reference="sec:masks"} provides
+technical information about those masks with examples, while this
+section focuses on how to use PlotToSat to apply them before extracting
+EO information at plot locations. As shown in Figure
+[10](#fig:setMasks){reference-type="ref" reference="fig:setMasks"}, the
+user creates a dictionary containing the masks of interests. The
+dictionary may contain from zero to multiple masks. Then the masks are
+added to an instance of the class Manager. For example, in Figure
+[10](#fig:setMasks){reference-type="ref" reference="fig:setMasks"}
+\"myManager\" is an instance of the class Manager and \"myMasks\" is a
+dictionary created containing the masks of the user's interests. The
+user can use the command \"myManager.setMasks(myMasks) to set the masks
+of interest. The chosen masks will be applied to all the EO collections
+added to the system (Section [4.2](#sec:addCols){reference-type="ref"
+reference="sec:addCols"}).
+
+![To define masks the user needs to first create a dictionary with the
+masks of their interest and then import it into the Manager as shown in
+this figure](img/SetMasks.jpg){#fig:setMasks width="50%"}
+
+To define a dictionary of masks, for each mask of interest you need (1)
+its corresponding label (Table [1](#tab:Masks){reference-type="ref"
+reference="tab:Masks"}) and (2) a buffer value. The buffer value defines
+how much buffer will be added around the edges of the area to be
+removed. To define the forest loss mask, a dictionary is required as
+input; the dictionary should contain the start and end date of the
+forest loss of interest, along with the buffer. Regarding the Descending
+and the Ascending Aspects the buffer value must always be zero as a
+median filter has already been applied and the segments of the aspects
+are small so adding buffers could results into very little to no data
+retained. Additionally, Descending and Ascending Masks should never be
+applied simultaneously, as they have no overlap. If the user wants to
+apply Ascending masks to the ascending Sentinel-1 data and Descending
+masks to the descending Sentinel-1 data then the option provided in
+Section [4.2](#sec:addCols){reference-type="ref"
+reference="sec:addCols"} should be used while adding the Sentinel-1
+collection to the Manager (i.e., myManager.addCollection(\"sentinel-1\",
+True), where \"True\" implies using the aspects maps). Table
+[1](#tab:Masks){reference-type="ref" reference="tab:Masks"} summarises
+the inputs parameters of each available masks.
 
 :::: center
 ::: {#tab:Masks}
-  Mask                   Label            Input Parameters
+  Mask                        label             Input Parameters
   ---------------------- ---------------- -----------------------------
-  Ground surface water   \"gsw\"          \<buffer\>
-  Land mask              \"lmask\"        \<buffer\>
-  Forest loss mask       \"forestMask\"   { \"buffer\": \<buffer\>
-                                          \"startDate\":\<startDate\>
-                                          \"endDate\":\<endDate\>}
-  Descending Aspects     \"aspectDes\"    0
+  Ground surface water       \"gsw\"               \<buffer\>
+  Land mask                 \"lmask\"              \<buffer\>
+  Forest loss mask        \"forestMask\"     { 'buffer': \<buffer\>
+                                           \"startDate\":\<startDate\>
+                                            \"endDate\":\<endDate\>}
+  Descending Aspects      \"aspectDes\"                 0
   (22.5-157.5)                            
-  Ascending Aspects      \"aspectAsc\"    0
+  Ascending Aspects       \"aspectAsc\"                 0
   (202.5-337.5)                           
 
-  : Available masks that can optionally be loaded to PlotToSat and
-  applied.
+  : Available masks that can optionally be loaded to the system and
+  applied to all chosen collections
 :::
 ::::
-
-The buffer value defines how much buffer will be added around the edges
-of the area to be removed. Regarding the Descending and the Ascending
-Aspects the buffer value must always be zero as a median filter has
-already been applied and the segments of the aspects are small so adding
-buffers could results into very little to no data retained.
-Additionally, Descending and Ascending Masks should never be applied
-simultaneously, as they have no overlap. If the user simply wants to
-apply Ascending masks to the ascending Sentinel-1 data and Descending
-masks to the descending Sentinel-1 data then the option provided in
-Section [4.1.2](#sec:addCols){reference-type="ref"
-reference="sec:addCols"} should be used while adding the Sentinel-1
-collection to the Manager (i.e.,
-\<*myPlotToSat.addCollection(\"sentinel-1\", True)*\>, where \"*True*\"
-implies using the aspects maps).
 
 Here is an example of how the user can define a surface mask with 30
 meter buffer, a land surface mask with 30 meter buffer and a forest loss
 mask from 2000 till 2017 with a 30 meter buffer. The masks dictionary,
-named \"*masks*\" is then added to the instance of the instance of the
-*PlotToSat* class, named \"*myPlotToSat*\".
+named \"masks\" is then added to the instance of the Manager, named
+\"myManager\". \*\*\*
 
-``` {#lst:defOptMasks style="mystyle" label="lst:defOptMasks"}
-masks = {
-          "gsw"       : 30, 
-          "lmask"     : 30, 
-          "forestMask": {
-                 "buffer"   :30, 
-                 "startDate":'2000-01-01', 
-                 "endDate"  :'2017-12-31'
+           masks = {
+                  "gsw": 30, 
+                  "lmask": 30, 
+                  "forestMask": {
+                         "buffer":30, 
+                         "startDate":'2000-01-01', 
+                         "endDate":'2017-12-31'
                   }
-            } 
-    myPlotToSat.setMasks(masks) 
-```
+           } 
+           myManager.setMasks(masks)
 
-### Dealing with potential errors {#sec:errors}
+The use of masks is presented in the complete code example depicted in
+Figure [11](#fig:Code2){reference-type="ref" reference="fig:Code2"}.
+This example code also includes examples on how to address potential
+errors, as explained in Section [4.6](#sec:errors){reference-type="ref"
+reference="sec:errors"}.
 
-There are three known errors that you may encounter while running
-PlotToSat:
+![A complete example script containing the optional
+features](img/Code2.jpg){#fig:Code2 width="83%"}
+
+## Dealing with potential errors {#sec:errors}
+
+There are three \*\*\* known \*\*\* errors that you may encounter while
+running PlotToSat:
 
 1.  \"Maximum recursion depth exceeded in comparison\"
 
@@ -555,222 +509,479 @@ PlotToSat:
 
 The first two errors are closely associated, but the first will appear
 when executing the iPython script, while the second will arise when
-executing a GEE request on the Tasks tab. Recursion is a programming
-technique where a function calls itself to solve a problem. The
-\"Maximum recursion depth exceeded\" error happens when a recursive
-function calls itself excessively, surpassing the allocated memory for
-function calls within the program's call stack. This error is often
-addressed by rewriting the code in an iterative way. However, it's
-important to note that GEE is a functional programming language,
-intended to work with recursive functions. The primary solution
-implemented in PlotToSat is to divide the imported plots into subgroups
-and process those subgroups iteratively. The results of each subgroup
-though are export into a file, resulting into exporting multiple files
-but a script is provided for merging those files (Section
-[4.3](#sec:mergingFiles){reference-type="ref"
-reference="sec:mergingFiles"}).
+executing the batch script on the Tasks tab in GEE. Recursion is a
+programming technique where a function calls itself directly or
+indirectly to solve a problem. The \"Maximum recursion depth exceeded\"
+error happens when a recursive function calls itself excessively,
+surpassing the allocated memory for function calls within the program's
+call stack. This error is often addressed by rewriting the code in an
+iterative manner. However, it's important to note that GEE is a
+functional programming language, intended to work with recursive
+functions.
 
-There are two parameters the user may tune to reduce the possibility of
-Errors 1 and 2: (1) Increasing the maximum recursion depth of the system
-enables the system to process more data within a single subgroup, but it
-may result in slowdowns or even crashes. If you choose to use this
-option, it's important to understand its associated risks. The code for
+\*\*\* The primary solution implemented in PlotToSat is to subset the
+imported plots, process those subsets iteratively and export them into
+multiple files but the user may also increase the recursion depth.
+
+There are two parameters to the provided solutions that the user may
+tune. (1) Increasing the maximum recursion depth of the system enables
+the system to process more data within a single subset, but it may
+result in slowdowns or even crashes. If you choose to use this option,
+it's important to understand its associated risks. The code for
 increasing the maximum depth as follows:
 
-``` {#lst:setRecursion style="mystyle" label="lst:setRecursion"}
-import sys
-    sys.setrecursionlimit(n) 
-```
+           import sys
+           sys.setrecursionlimit(n)
 
 where 'n' represents the new recursion depth/limit. The default value is
 1000, which is retrievable using the function
-\"*sys.getrecursionlimit()*\". It further worth noting that this only
-changes the recursion parameters of a computer and will not resolved
-Error 2.
+\"sys.getrecursionlimit()\".
 
-\(2\) By default, PlotToSat divides the plots into subgroups to mitigate
-Errors 1 and 2. The default number of plots per subgroup is 400. The
-user may define the number of plots per subgroup to either increase or
-decrease the number of GEE requests. Please note that if we increase the
-sampling number, the number of GEE requests and exported files
-decreases. Here is an example of defining the number of plots per
-subgroup:
+\(2\) By deafault PlotToSat divides the plots into subsets. The default
+number of plots per subset is 400. The user may increase this number to
+reduce the number of batch script used as follow:
 
-``` {#lst:setSampliting style="mystyle" label="lst:setSampliting"}
-myPlotToSat.setSampling(n)  
-```
+           myManager.setSampling(n)
 
-where \"*n*\" represents the number of plots that will be included in
-each subgroup. If the plots are spread across many EO tiles, the user
-may need to reduce the sampling number, while if the plots are closer
-together, a higher number of plots per subgroup should work. We
-recommend copying a subset of the plot data into a CSV file and
+where 'n' represents the number of plots that will be included in each
+subset.
+
+Increasing the number of plot per subsets is advantageous due to the
+allocation of 3000 free batch scripts per user. Each subset processed
+through PlotToSat generates a .csv file, consuming one batch script. In
+cases of batch script exhaustion, users can initiate new academic
+projects, granting an additional 3000 free batch scripts. Excessively
+increasing this value may result in the previously mentioned errors. We
+recommend extracting a subset of the plot data into a .csv file and
 conducting tests, starting with 1000 plots per subset and adjusting this
-number up or down to assess system and GEE capacity until optimal tuning
-is achieved. We advise against running this test on the entire dataset
-to avoid unnecessary consumption of cloud resources and GEE requests.
+number up or down to assess system compatibility until optimal tuning is
+achieved. We advise against running this test on the entire dataset to
+avoid unnecessary consumption of cloud resources and batch
+scripts.\*\*\*
 
-Regarding the final potential error, in [@miltiadou2024PlotToSat] there
-were 2 cases of failed requests out of 174. If the request timeouts, the
-user can identify the range of plot data not processed (stated on the
-name of the failed request) and use the command
-\"*myPlotToSat.exportFeaturesMinMax(\<folder\>, \<startOfName\>,
-\<min\>, \<max\>)*\" to reprocess a subset of the plot network. The
-command \"*myPlotToSat.exportFeaturesMinMax(\<folder\>, \<startOfName\>,
-\<min\>, \<max\>)*\" requires four inputs: (a) the folder name where the
-data will be exported on the user's Google Drive, (b) the starting name
-for the exported feature vectors, (c) the index where processing of
-plots will stop. For example, if min=300 and max=600, plots at indices
-300 through 599 will be processed. Index 300 is included, while index
-600 is excluded. Please note that [this command does not create
-subgroups]{.underline}. Therefore, if multiple commands fail you need to
-divide the data into subgroups manually and run the command multiple
-times. An example is given below:
+The final potential error occurs when a batch process is too large.
+According to GEE's definition, a batch script can run for up to 5 days.
+However, GEE aims to distribute resources evenly among users. Therefore,
+if a user attempts to export an excessive amount of data, they might
+encounter this error. If some of the .csv files fail to be exported, the
+provided option of merging all the exported data into a single .csv file
+will also fail. In such a case, it is recommended that the user
+identifies the missing data and rerun only that specific dataset instead
+of the entire dataset (to prevent excessive resource usage).
+Subsequently, the user may need to merge the results using the
+horizontal and vertical options from the pandas Python library or an
+equivalent method.
 
-``` {#lst:rerun style="mystyle" label="lst:rerun"}
-myPlotToSat.exprtFeaturesMinMax("folderSpain2", "r25_2020",300,600) 
-    myPlotToSat.exprtFeaturesMinMax("folderSpain2", "r25_2020",600,900)  
-```
+The commands for tuning the errors are demonstrated in the complete code
+example provided in Figure [11](#fig:Code2){reference-type="ref"
+reference="fig:Code2"}.
 
-Please do not rerun \"*myPlotToSat.exportFeatures(\<folder\>,
-\<startOfName\>)*\" as it will reprocess the EO data for all plots
-instead of just the failed requests, resulting in unnecessary
-consumption of computing resources, which is not energy efficient and
-consequently harmful to the environment.
+# Outputs: What do I get and what does it mean {#sec:outputs}
 
-## Downloading and merging exported files {#sec:mergingFiles}
+\*\*\* In PlotToSat the mean of each month is taken, and twelve temporal
+instances are provided for each band corresponding to each calendar
+month. A unique prefix is added to the existing band names, representing
+the months from 0 to 11, which correspond to January through December
+respectively. **Each column name has the form A_B. The A part indicates
+the temporal information of the signature and the part B the spectral
+information of the signature.** For instance, \"0_B11\" designates band
+B11 for the month of January. Each row within the exported .csv file
+corresponds to a plot.
 
-The \"*MergingLib*\" module provides the
-\"*mergeAll(\<gdriveFolderDir\>, \<fieldDataWithIdentifiers\>)*\"
-command, which merges the multiple exported CSV files from GEE.
-Initially, the user needs to download o their local machine and extract
-the folder where the CSV files are saved on Google Drive (the folder's
-name is defined in PlotToSat, as shown in Section
-[4.1.3](#sec:defOuts){reference-type="ref" reference="sec:defOuts"}).
-Please note that sometimes GEE may create two folders with the same name
-and distribute the generated CSV files across both folders, due to GEE's
-parallel data processing. In such cases, download both folders and merge
-their contents before proceeding with the script for file merging. Then,
-create a new .ipynb file in the same directory as PlotToSat's .ipynb
-files and import the necessary libraries (as shown in line 1 of Listing
-[\[lst:mergeCode\]](#lst:mergeCode){reference-type="ref"
-reference="lst:mergeCode"}). To execute the
-\"*mergeAll(\<gdriveFolderDir\>, \<fieldDataWithIdentifiers\>)*\"
-command (as shown in line 5 of Listing
-[\[lst:mergeCode\]](#lst:mergeCode){reference-type="ref"
-reference="lst:mergeCode"}), you need to provide two input parameters:
-
-1.  The name and path directory of the local folder downloaded from your
-    Google Drive, where the CSV files exported by PlotToSat and GEE are
-    stored.
-
-2.  The value assigned to the key \"*outPlotFileWithIDs*\" when
-    generating the field-related dictionary (Section
-    [4.1.1](#sec:defPar){reference-type="ref" reference="sec:defPar"}).
-    For example, in Listing
-    [\[lst:testCode1\]](#lst:testCode1){reference-type="ref"
-    reference="lst:testCode1"}, the value is
-    \"*plotsWithIDs/SpainIDs_1.csv*,\" and in Listing
-    [\[lst:testCode2\]](#lst:testCode2){reference-type="ref"
-    reference="lst:testCode2"}, it's \"*plotsWithIDs/SpainIDs_2.csv*.\"
-    These are file paths pointing to CSV files, each containing the
-    related plot information with attached identifiers. As mentioned
-    earlier, a different file path and CSV file name must be provided
-    for each run of PlotToSat; otherwise, PlotToSat will override the
-    previously created files.
-
-A full example code for merging the multiple exported CSV files is given
-here:
-
-    [style=mystyle, , caption={An example script of how to merge the multiple exported files on GEE}, label=lst:mergeCode]
-        %run MergingLib.ipynb
-        
-        gdriveFolderDir = r"C:\Documents\folderSpain2"
-        fieldDataWithIdentifiers = r"plotsWithIDs\SpainIDs_1.csv"
-        mergeAll(gdriveFolderDir,fieldDataWithIdentifiers) 
-
-# Outputs: What do you get and what does it mean {#sec:outputs}
-
-Once the merge script is executed, the folder \"MergedCsvs\" is created
-inside the local folder downloaded from your Google Drive. The folder
-\"MergedCsvs\" contains two files: one for the mean and one for the
-standard deviation values of the pixels lying within the plots'
-circumferences (Figure [5](#fig:OutputExample){reference-type="ref"
-reference="fig:OutputExample"}). [Please note that the mean and standard
-deviation values provided represent the statistics of the pixels within
-each plot's circumference. Furthermore, the pixel-wise mean of all
-images acquired during each month is calculated prior to calculating the
-exported statistics.]{.underline}
+\*\*\* Figure [12](#fig:OutputExample){reference-type="ref"
+reference="fig:OutputExample"} depicts how the multiple files are
+initially exported along with the \"MergeCsvs\" folder that is created
+once the provided script for merging them is applied. As shown on the
+left-hand side of the image, there is a list of .csv files. These files
+are an example of the potential outputs of PlotToSat exported on Google
+Drive. The user needs to download the relevant folder and extract it.
+\*\*\* Once the script for merging the files is executed, a folder named
+\"MergedCsvs\" is generated. This folder contains two files: (1) The
+first one contains the mean values of the pixels located inside each
+plot, while (2) the second one contains their corresponding standard
+deviation. \*\*\* In these files, the plot names and all the relevant
+field information are retained, along with the spectral-temporal
+signatures extracted from the selected collection(s). In the figure, the
+\"CX\" and \"CY\" columns originate from the plot data and indicate the
+geographical location of the plot centres. The data labelled as
+\"0_VHAsc\" and \"0_VHDes\" are collected from the Sentinel-1 dataset.
+The number \"0\" corresponds to the calendar month of January, \"VH\"
+refers to polarisation, and \"Asc/Des\" stands for Ascending and
+Descending orbit respectively. Similarly, in the Sentinel-2 dataset,
+'0_B11' implies the mean value of band B11 during the month of January.
 
 ![ An example of how the data are exported. Once the script for merging
 the data is run, the folder \"MergedCsvs\" is
 created.](img/OutputExample.jpg){#fig:OutputExample width="\\textwidth"}
 
-Each row in the merged CSV files contains plot information, including
-both plot and EO time-series data. The plot data are copied from the
-imported CSV file listing the plots of a plot network. Regarding the EO
-time-series data, twelve values are provided for each band,
-corresponding to each calendar month. Each column contains statistics
-for a specific band over the course of one month. A unique prefix is
-added to the existing band names, representing the months from 0 to 11,
-which correspond to January through December respectively. Each column
-name has the form A_B. Part A defines the temporal information of the
-time-series and part B the band information of the time-series. For
-instance, \"0_B11\" designates band B11 of Sentinel-2 for the month of
-January. [Please note that the order of the columns is
-random!]{.underline}
+# Background information about available collections and masks {#sec:Techical}
 
-Regarding Sentinel-2 the bands {B1, B2, B3, B4, B6, B7, B8, B8A, B9,
-B11, B12} correspond to {Aerosols, Blue, Green, Red, Red Edge 1, Red
-Edge 2, Red Edge 3, NIR, Red Edge 4, Water vapor, SWIR 1, SWIR 2}.
+In this section, we present background information, theoretical
+concepts, and pre-processing steps concerning the collections and
+selection of masking. Background information is provided to explain the
+rationale behind the chosen pre-processing steps and decisions.
 
-Regarding Sentinel-1, all bands {VHAsc, VHDes, VVAsc, VVDes} are
-collected in the microwave part of the spectrum. Polarisation defines
-the orientation of the electromagnetic waves. VV polarisation means that
-both transmitted and received signals have a vertical orientation. VH
-means that the transmitted signal has a vertical orientation and the
-received signal has a horizontal orientation. Asc and Des refer to the
-movement of the satellite; in an Ascending (Asc) orbit, the satellite is
-moving from south to north, while in a Descending (Des) orbit, the
-satellite is moving from north to south.
+## Sentinel-1 {#sec:s1}
 
-Please [note that sometimes gaps exist within the exported merged
-files.]{.underline} If the entire EO time-series information for a plot
-is missing, then it is likely that the corresponding plot was located in
-a masked out area. If parts of the EO time-series are missing, it could
-be due to defects in data acquisition or due to cloud masking.
+The Sentinel-1 mission comprises a constellation of two satellites that
+gather C-band SAR (Synthetic Aperture Radar) data, offering a joint
+revisit period of 6 days and a resolution of 10 metres. SAR systems are
+active sensors that operate using microwave wavelengths. They emit
+pulses sideways and gather information by measuring the round-trip time.
+The selected wavelengths that these systems employ provide the advantage
+of operating under various weather conditions; the acquired data are
+minimally affected by clouds, illumination, and other atmospheric
+conditions. In contrast to LiDAR, SAR data can penetrate through objects
+and provide insights into the water content of trees and their
+dielectric constant [@ahern1993seasonal].
 
-Figure [8](#fig:timeseries){reference-type="ref"
-reference="fig:timeseries"} shows examples the Sentinel-1 and Sentinel-2
-time-series of a single plot. There are four time-series per plot for
-Sentinel-1, corresponding to two polarisations (VV, VH) and two orbit
-direction (Ascending and Descending), resulting in four distinct options
-when combined. A Sentinel-2 time-series forms a spectral-temporal
-signature that captures both the spectral and temporal characteristics
-of a plot.
+PlotToSat uses the 'COPENICUS/S1_GRD' collection from GEE. Within this
+collection, the data have undergone pre-processing using the Sentinel-1
+Toolbox. According to the collection description, Thermal noise removal,
+Radiometric calibration, and Terrain correction have been carried out.
+It's worth noting, however, that SAR data contain speckle noise, which
+appears in the images as \"salt-and-pepper\" artifacts
+[@dasari2015importance]. Multiple filters have been developed to
+mitigate speckle noise, but it's worth noting that due to the prior
+ortho-rectification performed, some speckle noise has been blended into
+neighbouring pixels. Regardless of this, a median filter is applied to
+reduce the impact of the noise. Since PlotToSat is primarily developed
+for forest research, the median filter is chosen because many other
+filters focus on enhancing edges that are hard to find in a forest
+canopy. Despite its simplicity, the median filter is well-suited for
+forest structures as it reduces speckles without blending noise or
+attempting to enhance features that hardly exist within a forest
+[@miltiadou2022selection].
 
-<figure id="fig:timeseries">
-<figure id="fig:S1">
-<img src="./img/OnPlot.csv_bldec_S1.jpg"
-style="width:90.0%;height:5cm" />
-<figcaption>Sentinel-1</figcaption>
+Additionally, an aspect not to be overlooked is the presence of shaded
+areas in the SAR data. Given that SAR systems emit sidewise, many slopes
+in mountainous regions often appear dark. To address this concern, one
+solution involves the removal of these shaded regions through the
+application of aspect maps derived from a digital elevation model. In
+the PlotToSat framework, we leverage elevation data sourced from the
+\"NASA/NASADEM_HGT/001\" collection. The slopes of the north-east, east,
+and south-east directions (ranging from 22.5° to 157.5°) should align
+with the non-shaded areas of the Ascending data. Similarly, the slopes
+of the south-west, west, and north-west directions (ranging from 202.5°
+to 337.5°) should align with the non-shaded Descending data
+[@miltiadou2022selection].
+
+Table [2](#tab:aspects){reference-type="ref" reference="tab:aspects"}
+illustrates the selection of these non-shaded regions within a
+mountainous expanse in Spain. However, researchers must take into
+consideration whether they wish to mask the Ascending and Descending
+data according to the morphology of the study area. While adding the
+Sentinel-1 collection into the Manager of PlotToSAT using the
+\"addCollection(\<collectionLabel\>,\<parameter\>)\" function, the
+option to enable (True) or disable (False) this feature exist using the
+\<parameter\> input option. A practical example is given Section
+[4.2](#sec:addCols){reference-type="ref" reference="sec:addCols"}.\"
+
+:::: center
+::: {#tab:aspects}
+   Sentinel-1 Image    Selected Aspects        Output
+  ------------------ --------------------- --------------
+     VV Ascending      22.5^o^--157.5^o^    Masked Image
+                                           
+    VV Descending     202.5^o^--337.5^oo^   Masked Image
+                                           
+     VH Ascending      22.5^o^--157.5^o^    Masked Image
+                                           
+    VH Descending     202.5^o^--337.5^oo^   Masked Image
+                                           
+
+  : This table shows examples of removing shaded areas from the SAR data
+  using the corresponding aspects
+:::
+::::
+
+SAR signals also reflect high in the presence of moisture, making them
+highly sensitive to land surface water. To overcome this limitation when
+seeking to understand forest structure, an option for a land surface
+water mask is available. Technical details can be found in Section
+[6.3](#sec:masks){reference-type="ref" reference="sec:masks"}, while
+Section [4.5](#sec:maskscript){reference-type="ref"
+reference="sec:maskscript"} provides an explanation on how to utilise
+the masks in PlotToSat.
+
+The interpretation of Sentinel-1 data is encapsulated within a class
+module named 'Sentinel1.ipynb,' designed to function independently for
+potential other projects. More in-depth technical information about the
+interconnections among classes in PlotToSat is available in Section
+[7](#sec:Advanced){reference-type="ref" reference="sec:Advanced"}.
+However, if you prefer to skip this section and explore an example code
+('Sentinel1_test.ipynb') showcasing the utilisation of the Sentinel-1
+module, you can do so by following this link:
+<https://github.com/Art-n-MathS/FLFPythonAPI_GEE/blob/main/.ipynb_checkpoints/Sentinel1_test.ipynb>.
+This notebook provides information on how to use this module
+independently from the main system.\"
+
+## Sentinel-2 {#sec:s2}
+
+The Sentinel-2 mission comprises a constellation of two satellites. It
+is equipped with a Multi-spectral instrument, offering a resolution of
+10 metres and a joint revisit period of 5 days. PlotToSat uses
+Sentinel-2 L2 data sourced from the \"COPERNICUS/S2_SR_HARMONIZED\"
+collection available on GEE. These data have undergone processing by
+sen2cor, providing Bottom-Of-Atmosphere reflectance data. The digital
+values (DN) within this collection are harmonized; since 2022-02-25, the
+DN range of images with PROCESSING_BASELINE \"04.00\" or higher has been
+shifted by 1000.
+
+Unlike Sentinel-1 data, Sentinel-2 images are influenced by clouds, so
+it is essential to clean the images to improve predictions. This is done
+in two phases within the system:
+
+1.  The first phase is conducted using the CLOUDY_PIXEL_PERCENTAGE
+    threshold. This threshold is passed as a parameter in the Manager
+    object while adding the collection. Any image with a pixel cloud
+    percentage higher than the threshold is removed. For instance,
+    \"myManager.addCollection(\"sentinel-2\", 50)\" adds the Sentinel-2
+    collection to the Manager retaining only images with cloud coverage
+    below 50%.
+
+2.  The second phase involves applying cloud and shadow masking. The
+    cloud masks for each image are extracted from the collection, and
+    their corresponding cloud shadow masks are calculated based on the
+    sun's position. The two masks, cloud and shadow, are then combined
+    and applied. This process is performed individually on each image
+    and is mapped onto the retrieved Sentinel-2 collection to facilitate
+    parallel execution by GEE. Figure
+    [\[fig:cloudmasking\]](#fig:cloudmasking){reference-type="ref"
+    reference="fig:cloudmasking"} provides an example of applying the
+    cloud and shadow mask.
+
+<figure id="fig:MaskedImage">
+<figure id="fig:CloudedImage">
+<img src="./img/CloudedImage.jpeg" />
+<figcaption>A Sentinel-2 image with clouds</figcaption>
 </figure>
-<figure id="fig:S2">
-<img src="./img/OnPlot.csv_bldec_S2.jpg"
-style="width:90.0%;height:5cm" />
-<figcaption>Sentinel-2</figcaption>
+<figure id="fig:CloudNShadowMask">
+<img src="./img/CloudsOfImage.jpeg" />
+<figcaption>Calculated Cloud and Shadow Mask</figcaption>
 </figure>
-<figcaption>Examples of Sentinel-1 time-series and Sentinel-2
-spectral-temporal signatures at a plot.</figcaption>
+<figure id="fig:five over x">
+<img src="./img/MaskedImage.jpeg" />
+<figcaption>Image derived after cloud and shadow masking</figcaption>
 </figure>
+<figcaption>Example of applying cloud and shadow masking. </figcaption>
+</figure>
+
+The interpretation of Sentinel-2 is constructed into a class module
+named \"Sentinel2.ipynb\" and it can be used independently for other
+projects. Please refer to \"Sentinel2_test.ipynb\"
+([\<https://github.com/Art-n-MathS/FLFPythonAPI_GEE/blob/main/.ipynb_checkpoints/Sentinel2b_test.ipynb\>](<https://github.com/Art-n-MathS/FLFPythonAPI_GEE/blob/main/.ipynb_checkpoints/Sentinel2b_test.ipynb>){.uri})
+notebook for more information on how to use this module independently
+from the main system.
+
+## Masks {#sec:masks}
+
+A few additional masks have been generated to further support cleaning
+of data. As mentioned in Section
+[4](#sec:instructions){reference-type="ref"
+reference="sec:instructions"}, there are five masks available:
+
+1.  Ground Surface Water
+
+2.  Forest Loss
+
+3.  Land Mask
+
+4.  Ascending Aspect Masks
+
+5.  Descending Aspect Masks
+
+Information about the first three masks are provided in Sections
+[\[sec:\]](#sec:){reference-type="ref" reference="sec:"}
+
+## Ground Surface Water {#sec:gsw}
+
+The first mask to be described is the ground water surface mask ('gsw').
+SAR data reflect high in both moisture and structure. If we are
+interested in acquiring information about forest structure, then ground
+surface water may produce noise to the data acquired by Sentinel-1. We
+shall, therefore, consider removing ground surface water to reduce
+potential high values occurred due to the appearance of water. \*\*\*
+The collection \"JRC/GSW1_0/GlobalSurfaceWater\" is used, which contains
+maps about the presence of ground surface water from 1984 to 2015
+[@pekel2016high]. \*\*\* The following table shows some examples of
+masking out \"Embalse de la Peña del Águila\" dam in Spain.
+
+::: center
+        Image                   Mask                 Output
+  ------------------ --------------------------- --------------
+   Sentinel-1 Image     Ground Surface Water      Masked Image
+     VV Ascending        Mask with no buffer     
+                                                 
+   Sentinel-1 Image   Ground Surface Water Mask   Masked Image
+     VV Ascending         with 100m buffer       
+                                                 
+
+  : This table shows examples of masking out ground surface water from
+  Sentinel-1 data.
+:::
+
+## Forest Loss {#sec:forestLoss}
+
+\*\*\* Forest loss is a term used to define many factors that cause a
+reduction in forest coverage. These factors include, but are not limited
+to, wildfires, urbanisation, deforestation for agriculture, selective
+logging, and human-induced land use [@curtis2018classifying]. The Hansen
+Global Forest Change collection, defined as
+\"UMD/hansen/global_forest_change_2022_v1_10\" in Google Earth Engine,
+is used in PlotToSat. As of the publication date of PlotToSat, version
+v1_10 was available. This version provides annual global maps of forest
+loss between 2000 and 2022. The estimation of forest loss in these maps
+is done using the spectral bands red, NIR, SWIR1, and SWIR2 of Landsat,
+as outlined in the related paper [@hansen2013high]. Here, we present two
+examples of forest loss. Table [3](#tab:fire){reference-type="ref"
+reference="tab:fire"} provides examples of two fire events in the
+Troodos mountain range, Cyprus: the first occurred in Saitas in 2007,
+and the second took place in Solea in 2016. Table
+[4](#tab:forestLoss){reference-type="ref" reference="tab:forestLoss"}
+depicts deforestation in the north-west region of the State of Rodonia,
+Brazil.
+
+PlotToSat allows the user to mask out forest loss during the period of
+their interest, ranging from one to multiple years. There are many uses
+related to this feature. For example, fire events can alter forest
+ecosystems [@cochrane1999fire], and during regeneration, the biomass of
+shrubs differs from that in unburned areas [@aranha2020shrub].
+Therefore, if we are interested in determining how much biomass a fully
+grown forest naturally gains each year, it may be necessary to remove
+plots located in areas that have been burnt.
+
+As previously mentioned, PlotToSat is a highly flexible Object-Oriented
+framework. Consequently, users can employ the Masks class and combine it
+with either the Sentinel1 and/or Sentinel2 classes for various
+applications. Example codes are provided in their respective
+\*\_test.ipynb files on the GitHub repository
+(<https://github.com/Art-n-MathS/PlotToSat>).
+
+\*\*\*
+
+:::: center
+::: {#tab:fire}
+  -------------------- -------------------------- --------------------------
+   Before fire events   After the 1st fire event   After the 2nd fire event
+       2000-2001               2001-2010                  2001-2017
+                                                  
+  -------------------- -------------------------- --------------------------
+
+  : Example of images generated by applying Surface Water , Land Mask or
+  both. Study area includes Akamas Peninsula, which is a Natura 2000
+  site, and Paphos forest, Cyprus.
+:::
+::::
+
+:::: center
+::: {#tab:forestLoss}
+  ----------- ----------- ----------- -----------
+   Location    2000-2002   2000-2003   2000-2004
+                                      
+   2000-2005   2000-2006   2000-2007   2000-2008
+                                      
+   2000-2009   2000-2010   2000-2011   2000-2012
+                                      
+   2000-2013   2000-2014   2000-2015   2000-2016
+                                      
+   2000-2017   2000-2018   2000-2019   2000-2020
+                                      
+  ----------- ----------- ----------- -----------
+
+  : Forest lost in North West of State of Rodonia, Brazil. Using the
+  masks of PlotToSat and by choosing a different range of years each
+  time the forest lost was masked out as shown below.
+:::
+::::
+
+## Land Mask {#sec:landMask}
+
+\*\*\*In PlotToSat land is masked using the Shuttle Radar Topography
+Mission (SRTM) digital elevation dataset (\"CGIAR/SRTM90_V4\") provided
+by CGIAR, NASA. Table [5](#tab:LSMaks){reference-type="ref"
+reference="tab:LSMaks"} illustrates land masking, both in comparison to
+and in combination with masking out ground surface water. \*\*\*
+
+:::: center
+::: {#tab:LSMaks}
+   Surface Water              Land
+  --------------- -----------------------------
+     No Masks               Land Mask
+                  
+   Surface Water   Surface Water and Land Mask
+                  
+
+  : Example of images generated by applying Surface Water , Land Mask or
+  both. Study area includes Akamas Peninsula, which is a Natura 2000
+  site, and Paphos forest, Cyprus.
+:::
+::::
+
+# System Architecture {#sec:Advanced}
+
+The system is designed to be modular so that each module can be used
+independently. Section [4](#sec:instructions){reference-type="ref"
+reference="sec:instructions"} provides an explanation of how to use the
+Manager module, which links all the implemented modules to extract
+feature vectors from the plot data. Section
+[5](#sec:outputs){reference-type="ref" reference="sec:outputs"} explains
+the system's outputs. Section [6](#sec:Techical){reference-type="ref"
+reference="sec:Techical"} delves into the technical information about
+the collections, the decision-making process, and the necessary
+pre-processing steps. This section provides an overview of the UML
+(Unified Modified Language) diagram and the interaction between the
+modules. The aim is to support users in utilising the modules
+individually for other applications and extending PlotToSat to support
+more collections.
+
+Figure [17](#fig:UML){reference-type="ref" reference="fig:UML"} presents
+the UML diagram for PlotToSat. UML stands for 'Unified Modelling
+Language,' a standardized visual representation extensively employed in
+software engineering and system design. This language facilitates the
+modelling and visualization of a system's architecture, structure,
+behaviour, and relationships. PlotToSat predominantly employs
+aggregation, a concept that signifies one class encompassing other
+classes, which can also exist autonomously. For instance, the Manager
+class contains FieldData and Collections, while a Collection can stand
+independently. In the primary system architecture, the classes consist
+of Masks, Sentinel1, Sentinel2, FieldData, and Manager. All these
+classes rely on the Utils module, which houses utility functions (e.g.,
+adding buffers or applying Median filters). An additional supportive
+class, MapsVisualisation, provides an interactive map. Although it isn't
+utilised within the Manager, it finds purpose in associated test files
+linked with each class. Each class is coupled with a corresponding test
+file, aiding users in comprehending their independent use.
+
+![The UML digram of PlotToSAT. The user interacts with the Manager
+class. The architecture of the main system is shown in bold. Utils is an
+essential supportive module, while MapsVisualisation class is an
+additional class used for visualisation in the test files of each
+module/class. ](img/UML.jpg){#fig:UML width="\\textwidth"}
+
+# Related Forums and Social Media
+
+To discuss what to include
+
+Online social media are used for sharing PlotToSat updates and
+discussing issues or potential improvements. Information about PlotToSat
+can be found in the following:
+
+-   Google Groups: [\<url\>](<url>){.uri}
+
+-   Blogger: ART `&` M@thS [\<url\>](<url>){.uri}
+
+    This blog provides a general overview of the functionalities of the
+    system.
+
+-   Twitter: `@DrMiltiadou`
+
+-   YouTube Channel:
+    [\<https://www.youtube.com/@MiltoMiltiadou\>](<https://www.youtube.com/@MiltoMiltiadou>){.uri}
 
 # Acknowledgments
 
-M. M., S. W. D. G. and E. R. L. were funded by a UKRI Future Leaders
-Fellowship (MR/T019832/1) awarded to E. R. L. and the University of
-Cambridge.
-
-P. R-B. and J. A. acknowledge funding from the CLIMB-FOREST Horizon
-Europe Project (No 101059888) that was funded by the European Union
+This project is funded by a UKRI Future Leaders Fellowship
+(MR/T019832/1) and the Principal Investigator is Dr Emily Lines.
 
 [^1]: Corresponding author and main programmer.
