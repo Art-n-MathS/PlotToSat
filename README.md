@@ -16,60 +16,6 @@ title: "**User Guide of PlotToSat**"
 ::: titlepage
 :::
 
-# License {#License}
-
-PlotToSat is released under the GNU General Public Licence, Version 3.
-The full description of the usage licence is available
-here:[\<https://github.com/Art-n-MathS/PlotToSat/blob/main/License.txt\>](<https://github.com/Art-n-MathS/PlotToSat/blob/main/License.txt>){.uri}
-
-The following paper should be cited in every publication using
-PlotToSat: Miltiadou, M., Grieve, S., Ruiz-Benito, P., Astigarraga, J.,
-Cruz-Alonso, V., Triviño, J.T., and Lines, E. (2024) PlotToSat: A Tool
-for Generating Annual Time-Series from Sentinel-1 and Sentinel-2 at Each
-Plot Within a Plot Network for Machine Learning Applications *Computers
-& Geosciences*
-
-Link to paper: [\<url\>](<url>){.uri}
-
-The sample data are randomly created; they are well-distributed and lie
-within Peninsular Spain.
-
-# Installation {#sec:Installa1}
-
-This user guide assumes basic knowledge of Google Earth Engine (GEE) and
-Python. A GEE account is also required:
-[\<https://code.earthengine.google.com/\>](<https://code.earthengine.google.com/>){.uri}.
-
-[Important note:]{.underline} As per current regulations
-([https://earthengine.google.com/noncommercial/]{.underline}), GEE is
-free to use for non-commercial purposes by researchers, non-profits,
-educators, and government agencies. You can connect GEE to an existing
-Google Cloud Platform (GCP) account. If you need to create a new GCP
-account, a credit card may be requested during sign-up, but this is
-predominantly for verification and not immediate charges. To avoid
-unexpected charges, make sure that the cloud-projects created and used
-is for non-commercial purposes. In any case, please be considerable of
-the usage of GEE resources and cancel faulty tasks (tasks tab available
-on the right hand side of the online Graphical User Interface at
-<https://code.earthengine.google.com/>).
-
-PlotToSat is implemented using the Python API of Google Earth Engine in
-IPython 3 (Jupyter). While Visual Studio Code (VS Code) is recommended
-due to its status as a free, open-source, and cross-platform editor,
-other IDEs should also work but they have not been tested.
-
-The code is compatible with both Linux and Windows machines and is
-available at:
-[\<https://github.com/Art-n-MathS/PlotToSat\>](<https://github.com/Art-n-MathS/PlotToSat>){.uri}
-
-Depending on your environment, you can install the dependencies as
-follows:
-
-``` {#lst:dependancies style="mystyle" label="lst:dependancies"}
-pip install ipython pandas numpy earthengine-api
-    conda install -c conda-forge earthengine-api ipython pandas numpy  
-```
-
 # Introduction {#sec:Introduction}
 
 Forest ecologists gather data from predetermined sites known as plots.
@@ -133,16 +79,55 @@ The guide explains the User Interface of PlotToSat. For back-end
 information and image pre-processing steps, please refer to the
 associated paper.
 
+The sample data are randomly created; they are well-distributed and lie
+within Peninsular Spain.
+
+# Installation {#sec:Installa1}
+
+This user guide assumes basic knowledge of Google Earth Engine (GEE) and
+Python. A GEE account is also required:
+[\<https://code.earthengine.google.com/\>](<https://code.earthengine.google.com/>){.uri}.
+
+[Important note:]{.underline} As per current regulations
+([https://earthengine.google.com/noncommercial/]{.underline}), GEE is
+free to use for non-commercial purposes by researchers, non-profits,
+educators, and government agencies. You can connect GEE to an existing
+Google Cloud Platform (GCP) account. If you need to create a new GCP
+account, a credit card may be requested during sign-up, but this is
+predominantly for verification and not immediate charges. To avoid
+unexpected charges, make sure that the cloud-projects created and used
+is for non-commercial purposes. In any case, please be considerable of
+the usage of GEE resources and cancel faulty tasks (tasks tab available
+on the right hand side of the online Graphical User Interface at
+<https://code.earthengine.google.com/>).
+
+PlotToSat is implemented using the Python API of Google Earth Engine in
+IPython 3 (Jupyter). While Visual Studio Code (VS Code) is recommended
+due to its status as a free, open-source, and cross-platform editor,
+other IDEs should also work but they have not been tested.
+
+The code is compatible with both Linux and Windows machines and is
+available at:
+[\<https://github.com/Art-n-MathS/PlotToSat\>](<https://github.com/Art-n-MathS/PlotToSat>){.uri}
+
+Depending on your environment, you can install the dependencies as
+follows:
+
+``` {#lst:dependancies style="mystyle" label="lst:dependancies"}
+pip install ipython pandas numpy earthengine-api
+        conda install -c conda-forge earthengine-api ipython pandas numpy  
+```
+
 # Instructions: How to extract time-series at plot locations  {#sec:instructions}
 
 Two test cases are provided for using the *PlotToSat* class. Test case 1
-(Section [4.1](#sec:compcom){reference-type="ref"
+(Section [3.1](#sec:compcom){reference-type="ref"
 reference="sec:compcom"}) contains the minimal information that needs to
 be provided, while test case 2 (Section
-[4.2](#sec:optCom){reference-type="ref" reference="sec:optCom"})
+[3.2](#sec:optCom){reference-type="ref" reference="sec:optCom"})
 includes the optional commands. The data exported on Google Drive are
 often divided into multiple subgroups. Section
-[4.3](#sec:mergingFiles){reference-type="ref"
+[3.3](#sec:mergingFiles){reference-type="ref"
 reference="sec:mergingFiles"} explains how to merge the files exported
 in Google Drive.
 
@@ -153,9 +138,9 @@ The simplicity of PlotToSat is demonstrated in Listing
 reference="lst:testCode1"}. It runs in an iPython notebook and provides
 the code for test case 1 (code available in the associated
 *PlotToSat_test1.ipynb* file). The code is broken down and explained in
-Sections [4.1.1](#sec:defPar){reference-type="ref"
-reference="sec:defPar"}, [4.1.2](#sec:addCols){reference-type="ref"
-reference="sec:addCols"} and [4.1.3](#sec:defOuts){reference-type="ref"
+Sections [3.1.1](#sec:defPar){reference-type="ref"
+reference="sec:defPar"}, [3.1.2](#sec:addCols){reference-type="ref"
+reference="sec:addCols"} and [3.1.3](#sec:defOuts){reference-type="ref"
 reference="sec:defOuts"}.
 
     [style=mystyle, caption={This is the "PlotToSat\_test1.ipynb" file, which contains a complete example code for extracting time-series EO data at plot locations using PlotToSat.} , label=lst:testCode1]
@@ -375,9 +360,9 @@ the online Graphical User Interface
 (<https://code.earthengine.google.com/>). By default PlotToSat exports
 time-series for 400 plots in each exported CSV file; changing this
 values is an optional command included in Test case 2 (Section
-[4.2.2](#sec:errors){reference-type="ref" reference="sec:errors"}). For
+[3.2.2](#sec:errors){reference-type="ref" reference="sec:errors"}). For
 instructions on merging the series of CSV files, please refer to Section
-[4.3](#sec:mergingFiles){reference-type="ref"
+[3.3](#sec:mergingFiles){reference-type="ref"
 reference="sec:mergingFiles"}.
 
 ## Test Case 2: Optional commands {#sec:optCom}
@@ -387,9 +372,9 @@ reference="lst:testCode2"} provides the code for test case 2 (code
 available in the associated *PlotToSat_test2.ipynb* file), which
 includes the optional commands of PlotToSat. The optional commands added
 from test case 1 to test case 2 are explained in Sections
-[4.2.1](#sec:maskscript){reference-type="ref"
+[3.2.1](#sec:maskscript){reference-type="ref"
 reference="sec:maskscript"} and
-[4.2.2](#sec:errors){reference-type="ref" reference="sec:errors"}.
+[3.2.2](#sec:errors){reference-type="ref" reference="sec:errors"}.
 
     [style=mystyle, caption={This is the "PlotToSat\_test1.ipynb" file, which contains a complete example code for extracting time-series EO data at plot locations using PlotToSat.} , label=lst:testCode2]
         # Include these lines and comment out "ee.Authenticate()" after the 
@@ -465,7 +450,7 @@ reference="sec:maskscript"} and
 Masks can be used to reduce noise within the EO collections. The chosen
 optional masks are applied to all the EO collections added to the
 instance of *PlotToSat* (Section
-[4.1.2](#sec:addCols){reference-type="ref" reference="sec:addCols"}),
+[3.1.2](#sec:addCols){reference-type="ref" reference="sec:addCols"}),
 and they remain constant across different dates. Before masking the EO
 data, a user-defined buffer is applied to each mask individually, with
 each mask type having its own unique buffer. The related technical
@@ -476,7 +461,7 @@ The user creates a dictionary containing the masks of interests. The
 dictionary may contain from zero to multiple masks. The masks'
 dictionary is added to an already created instance of the class
 *PlotToSat* (e.g., *myPlotToSat* instance, Section
-[4.1.1](#sec:defPar){reference-type="ref" reference="sec:defPar"}) using
+[3.1.1](#sec:defPar){reference-type="ref" reference="sec:defPar"}) using
 this command *myPlotToSat.setMasks( \<masksDictionary\>)*.
 
 Table [1](#tab:Masks){reference-type="ref" reference="tab:Masks"}
@@ -517,7 +502,7 @@ Additionally, Descending and Ascending Masks should never be applied
 simultaneously, as they have no overlap. If the user simply wants to
 apply Ascending masks to the ascending Sentinel-1 data and Descending
 masks to the descending Sentinel-1 data then the option provided in
-Section [4.1.2](#sec:addCols){reference-type="ref"
+Section [3.1.2](#sec:addCols){reference-type="ref"
 reference="sec:addCols"} should be used while adding the Sentinel-1
 collection to the Manager (i.e.,
 \<*myPlotToSat.addCollection(\"sentinel-1\", True)*\>, where \"*True*\"
@@ -567,7 +552,7 @@ implemented in PlotToSat is to divide the imported plots into subgroups
 and process those subgroups iteratively. The results of each subgroup
 though are export into a file, resulting into exporting multiple files
 but a script is provided for merging those files (Section
-[4.3](#sec:mergingFiles){reference-type="ref"
+[3.3](#sec:mergingFiles){reference-type="ref"
 reference="sec:mergingFiles"}).
 
 There are two parameters the user may tune to reduce the possibility of
@@ -646,7 +631,7 @@ command, which merges the multiple exported CSV files from GEE.
 Initially, the user needs to download o their local machine and extract
 the folder where the CSV files are saved on Google Drive (the folder's
 name is defined in PlotToSat, as shown in Section
-[4.1.3](#sec:defOuts){reference-type="ref" reference="sec:defOuts"}).
+[3.1.3](#sec:defOuts){reference-type="ref" reference="sec:defOuts"}).
 Please note that sometimes GEE may create two folders with the same name
 and distribute the generated CSV files across both folders, due to GEE's
 parallel data processing. In such cases, download both folders and merge
@@ -666,7 +651,7 @@ reference="lst:mergeCode"}), you need to provide two input parameters:
 
 2.  The value assigned to the key \"*outPlotFileWithIDs*\" when
     generating the field-related dictionary (Section
-    [4.1.1](#sec:defPar){reference-type="ref" reference="sec:defPar"}).
+    [3.1.1](#sec:defPar){reference-type="ref" reference="sec:defPar"}).
     For example, in Listing
     [\[lst:testCode1\]](#lst:testCode1){reference-type="ref"
     reference="lst:testCode1"}, the value is
@@ -763,6 +748,21 @@ style="width:90.0%;height:5cm" />
 <figcaption>Examples of Sentinel-1 time-series and Sentinel-2
 spectral-temporal signatures at a plot.</figcaption>
 </figure>
+
+# License {#License}
+
+PlotToSat is released under the GNU General Public Licence, Version 3.
+The full description of the usage licence is available
+here:[\<https://github.com/Art-n-MathS/PlotToSat/blob/main/License.txt\>](<https://github.com/Art-n-MathS/PlotToSat/blob/main/License.txt>){.uri}
+
+The following paper should be cited in every publication using
+PlotToSat: Miltiadou, M., Grieve, S., Ruiz-Benito, P., Astigarraga, J.,
+Cruz-Alonso, V., Triviño, J.T., and Lines, E. (2024) PlotToSat: A Tool
+for Generating Annual Time-Series from Sentinel-1 and Sentinel-2 at Each
+Plot Within a Plot Network for Machine Learning Applications *Computers
+& Geosciences*
+
+Link to paper: [\<url\>](<url>){.uri}
 
 # Acknowledgments
 
