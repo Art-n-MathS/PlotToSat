@@ -470,24 +470,45 @@ contain the start and end date of the forest loss events that you wish
 to mask ([note: only years are used]{.underline}), along with the
 buffer.
 
-:::: center
-::: {#tab:Masks}
-  Mask                   Label            Input Parameters
-  ---------------------- ---------------- -----------------------------
-  Ground surface water   \"gsw\"          \<buffer\>
-  Land mask              \"lmask\"        \<buffer\>
-  Forest loss mask       \"forestMask\"   { \"buffer\": \<buffer\>
-                                          \"startDate\":\<startDate\>
-                                          \"endDate\":\<endDate\>}
-  Descending Aspects     \"aspectDes\"    0
-  (22.5-157.5)                            
-  Ascending Aspects      \"aspectAsc\"    0
-  (202.5-337.5)                           
+<table>
+  <thead>
+    <tr>
+      <th>Mask</th>
+      <th>Label</th>
+      <th>Input Parameters</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Ground surface water</td>
+      <td>"gsw"</td>
+      <td>&lt;buffer&gt;</td>
+    </tr>
+    <tr>
+      <td>Land mask</td>
+      <td>"lmask"</td>
+      <td>&lt;buffer&gt;</td>
+    </tr>
+    <tr>
+      <td>Forest loss mask</td>
+      <td>"forestMask"</td>
+      <td>{ "buffer": &lt;buffer&gt;<br>"startDate": &lt;startDate&gt;<br>"endDate": &lt;endDate&gt; }</td>
+    </tr>
+    <tr>
+      <td>Descending Aspects<br>(22.5-157.5)</td>
+      <td>"aspectDes"</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>Ascending Aspects<br>(202.5-337.5)</td>
+      <td>"aspectAsc"</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
 
-  : Available masks that can optionally be loaded to PlotToSat and
-  applied.
-:::
-::::
+<p align="center"><em>Table 1: Available masks that can optionally be loaded to PlotToSat and applied.</em></p>
+
 
 The buffer value defines how much buffer will be added around the edges
 of the area to be removed. Regarding the Descending and the Ascending
