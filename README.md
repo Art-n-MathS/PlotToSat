@@ -176,7 +176,7 @@ GEE. If you do not have a GEE account, Google is requesting you to
 create a Google Cloud account first and verification is done by
 providing a credit card. As long as PlotToSat and, consequently GEE, are
 used for non-commercial purposes, as per current regulations, there are
-no associated charges. More info at Section 2 (#secinstallation).
+no associated charges. More info at Section [2] (#secinstallation).
 
 ``` {#lst:region style="mystyle" label="lst:region"}
 
