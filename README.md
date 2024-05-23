@@ -684,7 +684,7 @@ exported statistics.]{.underline}
 
 ![Alt text](img/OutputExample.jpg){#fig:OutputExample width="\\textwidth"}
 
-<p align="center"><em>Figure 3: An example of how the data are exported. Once the script for merging the data is run, the folder \"MergedCsvs\" is created.</em></p>
+<p align="center"><em>Figure 3: An example of how the data are exported. Once the script for merging the data is run, the folder "MergedCsvs" is created.</em></p>
 
 
 Each row in the merged CSV files contains plot information, including 
