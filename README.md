@@ -637,7 +637,7 @@ instead of just the failed requests, resulting in unnecessary
 consumption of computing resources, which is not energy efficient and
 consequently harmful to the environment.
 
-###  <a id="secmergingFiles"> 3.3 Downloading and merging exported files
+### <a id="secmergingFiles"> 3.3 Downloading and merging exported files
 
 The \"*MergingLib*\" module provides the
 \"*mergeAll(\<gdriveFolderDir\>, \<fieldDataWithIdentifiers\>)*\"
