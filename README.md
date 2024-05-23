@@ -1,3 +1,5 @@
+<div style="text-align: justify;">
+
 # PlotToSat; a tool for generating time-series signatures from Sentinel-1 and Sentinel-2 at 3 at field-based plots for Machine Learning Applications
 **Milto Miltiadou<sup>[1,*]</sup>, Stuart Grieve<sup>[2]</sup>, Paloma Ruiz Benito<sup>[3]</sup>, Verónica Cruz-Alonso<sup>[3]</sup>, Julen Astigarraga<sup>[3]</sup>, Julián Tijerín Triviño<sup>[3]</sup> and Emily Lines<sup>[1]</sup>** <br>
 [1] Department of Geography,	University of Cambridge <br>
@@ -470,7 +472,9 @@ contain the start and end date of the forest loss events that you wish
 to mask ([note: only years are used]{.underline}), along with the
 buffer.
 
-<table>
+<div style="text-align: center;">
+
+<table style="margin: 0 auto;">
   <thead>
     <tr>
       <th>Mask</th>
@@ -507,7 +511,9 @@ buffer.
   </tbody>
 </table>
 
-<p align="center"><em>Table 1: Available masks that can optionally be loaded to PlotToSat and applied.</em></p>
+<p><em>Table 1: Available masks that can optionally be loaded to PlotToSat and applied.</em></p>
+
+</div>
 
 
 The buffer value defines how much buffer will be added around the edges
@@ -796,3 +802,6 @@ P. R-B. and J. A. acknowledge funding from the CLIMB-FOREST Horizon
 Europe Project (No 101059888) that was funded by the European Union
 
 [^1]: Corresponding author and main programmer.
+
+
+</div>
