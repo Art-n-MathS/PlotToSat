@@ -469,7 +469,7 @@ contain the start and end date of the forest loss events that you wish
 to mask ([note: only years are used]{.underline}), along with the
 buffer.
 
-<table>
+<a id="tabMasks"> <table>
   <thead>
     <tr>
       <th>Mask</th>
@@ -506,7 +506,7 @@ buffer.
   </tbody>
 </table>
 
-<a id="tabMasks"></a> <p align="left"><em>Table 1: Available masks that can optionally be loaded to PlotToSat and applied.</em></p>
+</a> <p align="left"><em>Table 1: Available masks that can optionally be loaded to PlotToSat and applied.</em></p>
 
 
 The buffer value defines how much buffer will be added around the edges
