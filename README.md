@@ -5,7 +5,7 @@
 [3] Department of Life Sciences, Universidad de Alcalá <br>
 
 
-## <a id="sec:introduction"></a> 1. Introduction 
+## <a id="secintroduction"></a> 1. Introduction 
 
 
 Forest ecologists gather data from predetermined sites known as plots.
@@ -108,20 +108,18 @@ pip install ipython pandas numpy earthengine-api
         conda install -c conda-forge earthengine-api ipython pandas numpy  
 ```
 
-## Instructions: How to extract time-series at plot locations  {#sec:instructions}
+## <a id="secinstructions"> Instructions: How to extract time-series at plot locations 
 
 Two test cases are provided for using the *PlotToSat* class. Test case 1
-(Section [3.1](#sec:compcom){reference-type="ref"
-reference="sec:compcom"}) contains the minimal information that needs to
+(Section [3.1](#seccompcom)) contains the minimal information that needs to
 be provided, while test case 2 (Section
-[3.2](#sec:optCom){reference-type="ref" reference="sec:optCom"})
+[3.2](#secoptCom))
 includes the optional commands. The data exported on Google Drive are
-often divided into multiple subgroups. Section
-[3.3](#sec:mergingFiles){reference-type="ref"
-reference="sec:mergingFiles"} explains how to merge the files exported
+often divided into multiple subgroups. Section 
+[3.3](#secmergingFiles) explains how to merge the files exported
 in Google Drive.
 
-### Test Case 1: compulsory commands {#sec:compcom}
+### <a id="seccompcom"> Test Case 1: compulsory commands
 
 The simplicity of PlotToSat is demonstrated in Listing
 [\[lst:testCode1\]](#lst:testCode1){reference-type="ref"
@@ -167,7 +165,7 @@ reference="sec:defOuts"}.
         #Definition and exportation of outputs
         myPlotToSat.exportFeatures("folderSpain1", "outfeaturevectors")  
 
-#### Definition of input parameters and creation of a PlotToSat instance {#sec:defPar}
+#### <a id="secdefPar"> Definition of input parameters and creation of a PlotToSat instance 
 
 To begin, generate a new IPython Notebook (.ipynb file) and **run
 \"PlotToSat.ipynb\"** to **import all the necessary libraries**. The new
@@ -285,7 +283,7 @@ PlotToSat** as follows:
 myPlotToSat = PlotToSat(polygon,fieldData,year) 
 ```
 
-#### Adding Earth Observation collections {#sec:addCols}
+#### <a id="secaddCols"> Adding Earth Observation collections 
 
 Once the Manager is constructed, the user can add the collections of
 their interest. If the available collections are not known, the
@@ -331,7 +329,7 @@ myPlotToSat.addCollection("sentinel-1", True)
     myPlotToSat.addCollection("sentinel-2", 50  )  
 ```
 
-#### Definition and exportation of outputs {#sec:defOuts}
+#### <a id="secdefOuts"> Definition and exportation of outputs
 
 Finally, we execute the following command to **fetch the data, interpret
 them, and export the time-series signatures as feature vectors.** The
@@ -361,7 +359,7 @@ instructions on merging the series of CSV files, please refer to Section
 [3.3](#sec:mergingFiles){reference-type="ref"
 reference="sec:mergingFiles"}.
 
-### Test Case 2: Optional commands {#sec:optCom}
+### <a id="secoptCom"> Test Case 2: Optional commands
 
 Listing [\[lst:testCode2\]](#lst:testCode2){reference-type="ref"
 reference="lst:testCode2"} provides the code for test case 2 (code
@@ -441,7 +439,7 @@ reference="sec:maskscript"} and
         # Command for re-running a subgroup of plots in case of time-out Errors
         myPlotToSat.exprtFeaturesMinMax("folderSpain2","r25_2020",300,600)   
 
-#### Available optional masks {#sec:maskscript}
+#### <a id="secmaskscript"> Available optional masks
 
 Masks can be used to reduce noise within the EO collections. The chosen
 optional masks are applied to all the EO collections added to the
@@ -543,7 +541,7 @@ masks = {
     myPlotToSat.setMasks(masks) 
 ```
 
-#### Dealing with potential errors {#sec:errors}
+#### <a id="secerrors"> Dealing with potential errors 
 
 There are three known errors that you may encounter while running
 PlotToSat:
@@ -639,7 +637,7 @@ instead of just the failed requests, resulting in unnecessary
 consumption of computing resources, which is not energy efficient and
 consequently harmful to the environment.
 
-### Downloading and merging exported files {#sec:mergingFiles}
+###  <a id="secmergingFiles"> Downloading and merging exported files
 
 The \"*MergingLib*\" module provides the
 \"*mergeAll(\<gdriveFolderDir\>, \<fieldDataWithIdentifiers\>)*\"
@@ -690,7 +688,7 @@ here:
         fieldDataWithIdentifiers = r"plotsWithIDs\SpainIDs_1.csv"
         mergeAll(gdriveFolderDir,fieldDataWithIdentifiers) 
 
-## Outputs: What do you get and what does it mean {#sec:outputs}
+##  <a id="secoutputs"> Outputs: What do you get and what does it mean 
 
 Once the merge script is executed, the folder \"MergedCsvs\" is created
 inside the local folder downloaded from your Google Drive. The folder
@@ -770,7 +768,7 @@ spectral-temporal signatures at a plot.</em></td>
 
 
 
-## License {#License}
+##  <a id="License"> License 
 
 PlotToSat is released under the GNU General Public Licence, Version 3.
 The full description of the usage licence is available
