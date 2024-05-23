@@ -220,18 +220,24 @@ API code, remove the 'var' declaration, the code enclosed between
 \"/\*\" and \"\*/\" (inclusive of \"/\*\" and \"\*/\"), and the
 semicolon \";\" at the end.
 
-<figure id="fig:GEEPol">
-<figure id="fig:RGB_G0_2019_1">
-<img src="./img/drawpolygon.jpg" />
-<figcaption>How to draw a polygon in GEE</figcaption>
-</figure>
-<figure id="fig:RGB_G1_2019_1">
-<img src="./img/drawpolygon1.jpg" />
-<figcaption>How to find the JavaScript code of polygon</figcaption>
-</figure>
-<figcaption>Drawing a polygon and finding its coordinates to use them in
-PlotToSat. </figcaption>
-</figure>
+
+<table>
+  <tr>
+    <td>
+      <img src="img/drawpolygon.jpg" alt="Subfigure 1" style="width:100%">
+      <p align="center"><em>(a) How to draw a polygon in GEE</em></p>
+    </td>
+    <td>
+      <img src="img/drawpolygon1.jpg" alt="Subfigure 2" style="width:100%">
+      <p align="center"><em>(b) How to find the JavaScript code of polygon</em></p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center"><em>Figure 2: Drawing a polygon and finding its coordinates to use them in PlotToSat.</em></td>
+  </tr>
+</table>
+
+
 
 **The plot information are stored in a dictionary**, which is a data
 structure that stores multiple data in pairs of key-value. The key
