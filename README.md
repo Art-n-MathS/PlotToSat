@@ -1,5 +1,3 @@
-<div style="text-align: justify;">
-
 # PlotToSat; a tool for generating time-series signatures from Sentinel-1 and Sentinel-2 at 3 at field-based plots for Machine Learning Applications
 **Milto Miltiadou<sup>[1,*]</sup>, Stuart Grieve<sup>[2]</sup>, Paloma Ruiz Benito<sup>[3]</sup>, Verónica Cruz-Alonso<sup>[3]</sup>, Julen Astigarraga<sup>[3]</sup>, Julián Tijerín Triviño<sup>[3]</sup> and Emily Lines<sup>[1]</sup>** <br>
 [1] Department of Geography,	University of Cambridge <br>
@@ -462,8 +460,7 @@ dictionary is added to an already created instance of the class
 [3.1.1](#sec:defPar){reference-type="ref" reference="sec:defPar"}) using
 this command *myPlotToSat.setMasks( \<masksDictionary\>)*.
 
-Table [1](#tab:Masks){reference-type="ref" reference="tab:Masks"}
-provides a summary of the available masks, including their associated
+Table [1](#tab:Masks)provides a summary of the available masks, including their associated
 labels and the input parameters required for each mask to be added to
 the masks' dictionary. For each mask of interest you need (1) its
 corresponding label and (2) a buffer value. To define the forest loss
@@ -472,9 +469,7 @@ contain the start and end date of the forest loss events that you wish
 to mask ([note: only years are used]{.underline}), along with the
 buffer.
 
-<div style="text-align: center;">
-
-<table style="margin: 0 auto;">
+<table>
   <thead>
     <tr>
       <th>Mask</th>
@@ -511,9 +506,7 @@ buffer.
   </tbody>
 </table>
 
-<p><em>Table 1: Available masks that can optionally be loaded to PlotToSat and applied.</em></p>
-
-</div>
+<a id="tab:Masks"></a> <p align="left"><em>Table 1: Available masks that can optionally be loaded to PlotToSat and applied.</em></p>
 
 
 The buffer value defines how much buffer will be added around the edges
@@ -802,6 +795,3 @@ P. R-B. and J. A. acknowledge funding from the CLIMB-FOREST Horizon
 Europe Project (No 101059888) that was funded by the European Union
 
 [^1]: Corresponding author and main programmer.
-
-
-</div>
