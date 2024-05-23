@@ -682,11 +682,12 @@ each plot's circumference. Furthermore, the pixel-wise mean of all
 images acquired during each month is calculated prior to calculating the
 exported statistics.]{.underline}
 
-![ An example of how the data are exported. Once the script for merging
-the data is run, the folder \"MergedCsvs\" is
-created.](img/OutputExample.jpg){#fig:OutputExample width="\\textwidth"}
+![Alt text](img/OutputExample.jpg){#fig:OutputExample width="\\textwidth"}
 
-Each row in the merged CSV files contains plot information, including
+<p align="center"><em>Figure 3: An example of how the data are exported. Once the script for merging the data is run, the folder \"MergedCsvs\" is created.</em></p>
+
+
+Each row in the merged CSV files contains plot information, including 
 both plot and EO time-series data. The plot data are copied from the
 imported CSV file listing the plots of a plot network. Regarding the EO
 time-series data, twelve values are provided for each band,
@@ -729,20 +730,24 @@ when combined. A Sentinel-2 time-series forms a spectral-temporal
 signature that captures both the spectral and temporal characteristics
 of a plot.
 
-<figure id="fig:timeseries">
-<figure id="fig:S1">
-<img src="./img/OnPlot.csv_bldec_S1.jpg"
-style="width:90.0%;height:5cm" />
-<figcaption>Sentinel-1</figcaption>
-</figure>
-<figure id="fig:S2">
-<img src="./img/OnPlot.csv_bldec_S2.jpg"
-style="width:90.0%;height:5cm" />
-<figcaption>Sentinel-2</figcaption>
-</figure>
-<figcaption>Examples of Sentinel-1 time-series and Sentinel-2
-spectral-temporal signatures at a plot.</figcaption>
-</figure>
+<table>
+  <tr>
+    <td>
+      <img src="img/OnPlot.csv_bldec_S1.jpg" alt="Subfigure 1" style="width:100%">
+      <p align="center"><em>(a) Sentinel-1</em></p>
+    </td>
+    <td>
+      <img src="img/OnPlot.csv_bldec_S2.jpg" alt="Subfigure 2" style="width:100%">
+      <p align="center"><em>(b) Sentinel-2</em></p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center"><em>Figure 4: Examples of Sentinel-1 time-series and Sentinel-2
+spectral-temporal signatures at a plot.</em></td>
+  </tr>
+</table>
+
+
 
 # License {#License}
 
