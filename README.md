@@ -126,10 +126,7 @@ The simplicity of PlotToSat is demonstrated in Listing
 reference="lst:testCode1"}. It runs in an iPython notebook and provides
 the code for test case 1 (code available in the associated
 *PlotToSat_test1.ipynb* file). The code is broken down and explained in
-Sections [3.1.1](#sec:defPar){reference-type="ref"
-reference="sec:defPar"}, [3.1.2](#sec:addCols){reference-type="ref"
-reference="sec:addCols"} and [3.1.3](#sec:defOuts){reference-type="ref"
-reference="sec:defOuts"}.
+Sections [3.1.1](#secdefPar), [3.1.2](#secaddCols) and [3.1.3](#secdefOuts).
 
     [style=mystyle, caption={This is the "PlotToSat\_test1.ipynb" file, which contains a complete example code for extracting time-series EO data at plot locations using PlotToSat.} , label=lst:testCode1]
         # import all the necessary libraries
@@ -354,10 +351,8 @@ the online Graphical User Interface
 (<https://code.earthengine.google.com/>). By default PlotToSat exports
 time-series for 400 plots in each exported CSV file; changing this
 values is an optional command included in Test case 2 (Section
-[3.2.2](#sec:errors){reference-type="ref" reference="sec:errors"}). For
-instructions on merging the series of CSV files, please refer to Section
-[3.3](#sec:mergingFiles){reference-type="ref"
-reference="sec:mergingFiles"}.
+[3.2.2](#secerrors)). For instructions on merging the series of CSV files, please refer to Section
+[3.3](#secmergingFiles).
 
 ### <a id="secoptCom"> 3.2 Test Case 2: Optional commands
 
@@ -366,9 +361,7 @@ reference="lst:testCode2"} provides the code for test case 2 (code
 available in the associated *PlotToSat_test2.ipynb* file), which
 includes the optional commands of PlotToSat. The optional commands added
 from test case 1 to test case 2 are explained in Sections
-[3.2.1](#sec:maskscript){reference-type="ref"
-reference="sec:maskscript"} and
-[3.2.2](#sec:errors){reference-type="ref" reference="sec:errors"}.
+[3.2.1](#secmaskscript) and [3.2.2](#secerrors).
 
     [style=mystyle, caption={This is the "PlotToSat\_test1.ipynb" file, which contains a complete example code for extracting time-series EO data at plot locations using PlotToSat.} , label=lst:testCode2]
         # Include these lines and comment out "ee.Authenticate()" after the 
@@ -444,7 +437,7 @@ reference="sec:maskscript"} and
 Masks can be used to reduce noise within the EO collections. The chosen
 optional masks are applied to all the EO collections added to the
 instance of *PlotToSat* (Section
-[3.1.2](#sec:addCols){reference-type="ref" reference="sec:addCols"}),
+[3.1.2](#secaddCols)),
 and they remain constant across different dates. Before masking the EO
 data, a user-defined buffer is applied to each mask individually, with
 each mask type having its own unique buffer. The related technical
@@ -455,7 +448,7 @@ The user creates a dictionary containing the masks of interests. The
 dictionary may contain from zero to multiple masks. The masks'
 dictionary is added to an already created instance of the class
 *PlotToSat* (e.g., *myPlotToSat* instance, Section
-[3.1.1](#sec:defPar){reference-type="ref" reference="sec:defPar"}) using
+[3.1.1](#secdefPar)) using
 this command *myPlotToSat.setMasks( \<masksDictionary\>)*.
 
 Table [1](#tabMasks) provides a summary of the available masks, including their associated
@@ -516,8 +509,7 @@ Additionally, Descending and Ascending Masks should never be applied
 simultaneously, as they have no overlap. If the user simply wants to
 apply Ascending masks to the ascending Sentinel-1 data and Descending
 masks to the descending Sentinel-1 data then the option provided in
-Section [3.1.2](#sec:addCols){reference-type="ref"
-reference="sec:addCols"} should be used while adding the Sentinel-1
+Section [3.1.2](#secaddCols) should be used while adding the Sentinel-1
 collection to the Manager (i.e.,
 \<*myPlotToSat.addCollection(\"sentinel-1\", True)*\>, where \"*True*\"
 implies using the aspects maps).
@@ -566,8 +558,7 @@ implemented in PlotToSat is to divide the imported plots into subgroups
 and process those subgroups iteratively. The results of each subgroup
 though are export into a file, resulting into exporting multiple files
 but a script is provided for merging those files (Section
-[3.3](#sec:mergingFiles){reference-type="ref"
-reference="sec:mergingFiles"}).
+[3.3](#secmergingFiles)).
 
 There are two parameters the user may tune to reduce the possibility of
 Errors 1 and 2: (1) Increasing the maximum recursion depth of the system
@@ -645,7 +636,7 @@ command, which merges the multiple exported CSV files from GEE.
 Initially, the user needs to download o their local machine and extract
 the folder where the CSV files are saved on Google Drive (the folder's
 name is defined in PlotToSat, as shown in Section
-[3.1.3](#sec:defOuts){reference-type="ref" reference="sec:defOuts"}).
+[3.1.3](#secdefOuts)).
 Please note that sometimes GEE may create two folders with the same name
 and distribute the generated CSV files across both folders, due to GEE's
 parallel data processing. In such cases, download both folders and merge
@@ -665,7 +656,7 @@ reference="lst:mergeCode"}), you need to provide two input parameters:
 
 2.  The value assigned to the key \"*outPlotFileWithIDs*\" when
     generating the field-related dictionary (Section
-    [3.1.1](#sec:defPar){reference-type="ref" reference="sec:defPar"}).
+    [3.1.1](#secdefPar)).
     For example, in Listing
     [\[lst:testCode1\]](#lst:testCode1){reference-type="ref"
     reference="lst:testCode1"}, the value is
