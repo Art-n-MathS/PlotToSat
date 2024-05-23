@@ -460,7 +460,7 @@ dictionary is added to an already created instance of the class
 [3.1.1](#sec:defPar){reference-type="ref" reference="sec:defPar"}) using
 this command *myPlotToSat.setMasks( \<masksDictionary\>)*.
 
-Table [1](#tab:Masks)provides a summary of the available masks, including their associated
+Table [1](#tabMasks) provides a summary of the available masks, including their associated
 labels and the input parameters required for each mask to be added to
 the masks' dictionary. For each mask of interest you need (1) its
 corresponding label and (2) a buffer value. To define the forest loss
@@ -506,7 +506,7 @@ buffer.
   </tbody>
 </table>
 
-<a id="tab:Masks"></a> <p align="left"><em>Table 1: Available masks that can optionally be loaded to PlotToSat and applied.</em></p>
+<a id="tabMasks"></a> <p align="left"><em>Table 1: Available masks that can optionally be loaded to PlotToSat and applied.</em></p>
 
 
 The buffer value defines how much buffer will be added around the edges
