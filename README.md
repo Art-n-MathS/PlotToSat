@@ -64,9 +64,9 @@ interaction is primarily with the PlotToSat class. Each class (e.g.,
 *Sentinel-1* class) can function autonomously for other applications and
 in the Github repository
 (\<<https://github.com/Art-n-MathS/PlotToSat>\>) there is a test-case
-for each class. [Only functions included in the associated test cases
+for each class. **Only functions included in the associated test cases
 should be used, as other functions may not be thoroughly tested and may
-not behave as expected.]{.underline}
+not behave as expected.**
 
 The guide explains the User Interface of PlotToSat. For back-end
 information and image pre-processing steps, please refer to the
@@ -81,8 +81,8 @@ This user guide assumes basic knowledge of Google Earth Engine (GEE) and
 Python. A GEE account is also required:
 [\<https://code.earthengine.google.com/\>](<https://code.earthengine.google.com/>)
 
-[Important note:]{.underline} As per current regulations
-([https://earthengine.google.com/noncommercial/]{.underline}), GEE is
+**Important note:** As per current regulations 
+([\<https://earthengine.google.com/noncommercial/\>](<https://earthengine.google.com/noncommercial/>), GEE is
 free to use for non-commercial purposes by researchers, non-profits,
 educators, and government agencies. You can connect GEE to an existing
 Google Cloud Platform (GCP) account. If you need to create a new GCP
@@ -91,8 +91,7 @@ predominantly for verification and not immediate charges. To avoid
 unexpected charges, make sure that the cloud-projects created and used
 is for non-commercial purposes. In any case, please be considerable of
 the usage of GEE resources and cancel faulty tasks (tasks tab available
-on the right hand side of the online Graphical User Interface at
-<https://code.earthengine.google.com/>).
+on the right hand side of the online Graphical User Interface at [\<https://code.earthengine.google.com/\>](<https://code.earthengine.google.com/>).
 
 PlotToSat is implemented using the Python API of Google Earth Engine in
 IPython 3 (Jupyter). While Visual Studio Code (VS Code) is recommended
@@ -247,10 +246,10 @@ containing the x and y coordinates of the plots' centres. The key
 file to be exported. This exported file contains the plot information
 but it also attaches identifiers to them. This file with the identifiers
 is used for merging the time-series files into one CSV file, along with
-the plot information. [At each run, please provide a different file name
+the plot information. **At each run, please provide a different file name
 for key \"outPlotFileWithIDs\"; otherwise, PlotToSat will overwrite an
 existing file with the same name, and merging time-series with plot
-information will not be possible.]{.underline} All the keys of the
+information will not be possible.** All the keys of the
 dictionary are mandatory. Here is an example of defining them:
 
 ``` {#lst:inputs style="mystyle" label="lst:inputs"}
@@ -334,18 +333,18 @@ command \"*myPlotToSat.exportFeatures(\<a\>,\<b\>)*\" requires two
 inputs: (a) the folder name where the data will be exported on the
 user's Google Drive, and (b) the starting name for the exported feature
 vectors. If the specified folder does not exist, GEE will create it.
-[It's important to note that GEE is unable to generate subfolders.
+**It's important to note that GEE is unable to generate subfolders.
 Additionally, due to parallel processing, sometimes GEE creates two
 folders with the same name and shares the exported files between
-them.]{.underline}
+them.**
 
 ``` {#lst:addCols style="mystyle" label="lst:addCols"}
 myPlotToSat.exportFeatures("gdrivefolder", "outfeaturevectors") 
 ```
 
 By executing the above command, a series of CSV files will be exported
-within the \"*gdrivefolder*\" in the user's Google Drive. [Please note
-that this is not instantaneous.]{.underline} You can check the process
+within the \"*gdrivefolder*\" in the user's Google Drive. **Please note
+that this is not instantaneous.** You can check the process
 of the submitted GEE requests at the Task tab on the right hand side of
 the online Graphical User Interface
 (<https://code.earthengine.google.com/>). By default PlotToSat exports
@@ -453,7 +452,7 @@ the masks' dictionary. For each mask of interest you need (1) its
 corresponding label and (2) a buffer value. To define the forest loss
 mask though, a dictionary is required as input; the dictionary should
 contain the start and end date of the forest loss events that you wish
-to mask ([note: only years are used]{.underline}), along with the
+to mask (**note: only years are used**), along with the
 buffer.
 
 <a id="tabMasks"> <table>
@@ -607,8 +606,8 @@ data will be exported on the user's Google Drive, (b) the starting name
 for the exported feature vectors, (c) the index where processing of
 plots will stop. For example, if min=300 and max=600, plots at indices
 300 through 599 will be processed. Index 300 is included, while index
-600 is excluded. Please note that [this command does not create
-subgroups]{.underline}. Therefore, if multiple commands fail you need to
+600 is excluded. Please note that **this command does not create
+subgroups**. Therefore, if multiple commands fail you need to
 divide the data into subgroups manually and run the command multiple
 times. An example is given below:
 
@@ -678,11 +677,11 @@ Once the merge script is executed, the folder \"MergedCsvs\" is created
 inside the local folder downloaded from your Google Drive. The folder
 \"MergedCsvs\" contains two files: one for the mean and one for the
 standard deviation values of the pixels lying within the plots'
-circumferences (Figure [3](#figOutputExample). [Please note that the mean and standard
+circumferences (Figure [3](#figOutputExample). **Please note that the mean and standard
 deviation values provided represent the statistics of the pixels within
 each plot's circumference. Furthermore, the pixel-wise mean of all
 images acquired during each month is calculated prior to calculating the
-exported statistics.]{.underline}
+exported statistics.**
 
 <p align="center">
   <img id="figOutputExample" src="img/OutputExample.jpg" alt="An example of how the data are exported" style="width:100%">
@@ -701,8 +700,8 @@ which correspond to January through December respectively. Each column
 name has the form A_B. Part A defines the temporal information of the
 time-series and part B the band information of the time-series. For
 instance, \"0_B11\" designates band B11 of Sentinel-2 for the month of
-January. [Please note that the order of the columns is
-random!]{.underline}
+January. **Please note that the order of the columns is
+random!**
 
 Regarding Sentinel-2 the bands {B1, B2, B3, B4, B6, B7, B8, B8A, B9,
 B11, B12} correspond to {Aerosols, Blue, Green, Red, Red Edge 1, Red
@@ -718,8 +717,8 @@ movement of the satellite; in an Ascending (Asc) orbit, the satellite is
 moving from south to north, while in a Descending (Des) orbit, the
 satellite is moving from north to south.
 
-Please [note that sometimes gaps exist within the exported merged
-files.]{.underline} If the entire EO time-series information for a plot
+Please **note that sometimes gaps exist within the exported merged
+files.** If the entire EO time-series information for a plot
 is missing, then it is likely that the corresponding plot was located in
 a masked out area. If parts of the EO time-series are missing, it could
 be due to defects in data acquisition or due to cloud masking.
