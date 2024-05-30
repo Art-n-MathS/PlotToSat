@@ -327,7 +327,7 @@ aspect filters enabled for Sentinel-1 and an upper limit threshold of
 
 ```python
 myPlotToSat.addCollection("sentinel-1", True) 
-    myPlotToSat.addCollection("sentinel-2", 50  )  
+myPlotToSat.addCollection("sentinel-2", 50  )  
 ```
 
 #### 3.1.3 <a id="secdefOuts"> Definition and exportation of outputs
