@@ -129,8 +129,8 @@ the code for test case 1 (code available in the associated
 Sections [3.1.1](#secdefPar), [3.1.2](#secaddCols) and [3.1.3](#secdefOuts).
 
 
-<a id="lsttestCode1"> 
-``` {#lsttestCode1 style="mystyle" label="lsttestCode1"}
+<a id="lsttestCode1"></a>
+```python
 # import all the necessary libraries
 %run PlotToSat.ipynb
         
@@ -164,6 +164,9 @@ myPlotToSat.addCollection("sentinel-2", 50  )
 #Definition and exportation of outputs
 myPlotToSat.exportFeatures("folderSpain1", "outfeaturevectors")  
 ```
+<div align="center">
+  <h4>Listing 1: This is the "PlotToSat\_test1.ipynb" file, which contains a complete example code for extracting time-series EO data at plot locations using PlotToSat.</h4>
+</div>
 
 #### 3.1.1 <a id="secdefPar">  Definition of input parameters and creation of a PlotToSat instance 
 
