@@ -53,8 +53,11 @@ steps, along with two additional optional steps:
     in each file in Step 3.
 
 
-![User's workflow of the system](img/PlotToSatDiagram.jpg)
-<p id="figworkflow" align="center"><em>Figure 1: User's workflow of the system</em></p>
+<p align="center">
+  <img id="figworkflow" src="img/PlotToSatDiagram.jpg" alt="User's workflow of the system">
+</p>
+<p align="center"><em>Figure 1: User's workflow of the system</em></p>
+
 
 The system is modular, consisting of multiple classes, yet the user's
 interaction is primarily with the PlotToSat class. Each class (e.g.,
