@@ -1,4 +1,4 @@
-# PlotToSat; a tool for generating time-series signatures from Sentinel-1 and Sentinel-2 at 3 at field-based plots for Machine Learning Applications
+# PlotToSat: a tool for generating time-series signatures from Sentinel-1 and Sentinel-2 at field-based plots for Machine Learning Applications
 **Milto Miltiadou<sup>[1,*]</sup>, Stuart Grieve<sup>[2]</sup>, Paloma Ruiz Benito<sup>[3]</sup>, Verónica Cruz-Alonso<sup>[3]</sup>, Julen Astigarraga<sup>[3]</sup>, Julián Tijerín Triviño<sup>[3]</sup> and Emily Lines<sup>[1]</sup>** <br>
 [1] Department of Geography,	University of Cambridge <br>
 [2] School of Geography,	Queen Mary University of London <br>
