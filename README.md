@@ -20,8 +20,7 @@ PlotTosat exports twelve values per band per collection corresponding to
 the twelve calendar months. Standard deviation is also provided for
 quality control.
 
-Figure [1](#figworkflow)
-shows the user-interface. The user-interface is divided into four main
+[Figure 1](#figworkflow) shows the user-interface. The user-interface is divided into four main
 steps, along with two additional optional steps:
 
 -   Step 1: Define the essential input parameters and create an instance
