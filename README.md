@@ -53,8 +53,9 @@ steps, along with two additional optional steps:
     recommend solutions e.g., defining how many plots will be exported
     in each file in Step 3.
 
-![Alt text]<a id="figworkflow"></a> (img/PlotToSatDiagram.jpg)
-<a id="fig:workflow"></a>  <p align="center"><em>Figure 1: User's workflow of the system</em></p>
+
+![User's workflow of the system](img/PlotToSatDiagram.jpg)
+<p id="fig:workflow" align="center"><em>Figure 1: User's workflow of the system</em></p>
 
 The system is modular, consisting of multiple classes, yet the user's
 interaction is primarily with the PlotToSat class. Each class (e.g.,
