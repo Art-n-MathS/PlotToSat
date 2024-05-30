@@ -678,15 +678,15 @@ Once the merge script is executed, the folder \"MergedCsvs\" is created
 inside the local folder downloaded from your Google Drive. The folder
 \"MergedCsvs\" contains two files: one for the mean and one for the
 standard deviation values of the pixels lying within the plots'
-circumferences (Figure [5](#fig:OutputExample){reference-type="ref"
-reference="fig:OutputExample"}). [Please note that the mean and standard
+circumferences (Figure [3](#figOutputExample). [Please note that the mean and standard
 deviation values provided represent the statistics of the pixels within
 each plot's circumference. Furthermore, the pixel-wise mean of all
 images acquired during each month is calculated prior to calculating the
 exported statistics.]{.underline}
 
-![Alt text](img/OutputExample.jpg){#fig:OutputExample width="\\textwidth"}
-
+<p align="center">
+  <img id="figOutputExample" src="img/OutputExample.jpg" alt="An example of how the data are exported" style="width:100%">
+</p>
 <p align="center"><em>Figure 3: An example of how the data are exported. Once the script for merging the data is run, the folder "MergedCsvs" is created.</em></p>
 
 
