@@ -105,9 +105,10 @@ available at:
 Depending on your environment, you can install the dependencies as
 follows:
 
-``` {#lst:dependancies style="mystyle" label="lst:dependancies"}
+``` {#lst:dependancies style="mystyle" label="lstdependancies"}
 pip install ipython pandas numpy earthengine-api
-        conda install -c conda-forge earthengine-api ipython pandas numpy  
+
+conda install -c conda-forge earthengine-api ipython pandas numpy  
 ```
 
 ## 3 <a id="secinstructions">  Instructions: How to extract time-series at plot locations 
@@ -122,45 +123,47 @@ in Google Drive.
 ### 3.1 <a id="seccompcom">  Test Case 1: compulsory commands
 
 The simplicity of PlotToSat is demonstrated in Listing
-[\[lst:testCode1\]](#lst:testCode1){reference-type="ref"
-reference="lst:testCode1"}. It runs in an iPython notebook and provides
+[\[lst:testCode1\]](#lsttestCode1). It runs in an iPython notebook and provides
 the code for test case 1 (code available in the associated
 *PlotToSat_test1.ipynb* file). The code is broken down and explained in
 Sections [3.1.1](#secdefPar), [3.1.2](#secaddCols) and [3.1.3](#secdefOuts).
 
-    [style=mystyle, caption={This is the "PlotToSat\_test1.ipynb" file, which contains a complete example code for extracting time-series EO data at plot locations using PlotToSat.} , label=lst:testCode1]
-        # import all the necessary libraries
-        %run PlotToSat.ipynb
+
+<a id="lsttestCode1"> 
+``` {#lsttestCode1 style="mystyle" label="lsttestCode1"}
+# import all the necessary libraries
+%run PlotToSat.ipynb
         
-        # Define study region
-        polygon = ee.Geometry.Polygon(
-            [[[-6.7820312500000135, 37.744682241748094],
-              [-1.1570312500000135, 37.32651387565316],
-              [0.1613281249999865, 42.25294129803316],
-              [-7.3093750000000135, 43.349172765639516]]])
+# Define study region
+polygon = ee.Geometry.Polygon(
+    [[[-6.7820312500000135, 37.744682241748094],
+      [-1.1570312500000135, 37.32651387565316],
+      [0.1613281249999865, 42.25294129803316],
+      [-7.3093750000000135, 43.349172765639516]]])
         
-        # Create a dictionary that holds the relevant plot information
-        fieldData = {
-            "csvfilename"         : "./samplePlots.csv",
-            "proj"                : "EPSG:3042",
-            "radius"              : 30,
-            "xcol"                : "CX",    
-            "ycol"                : "CY",
-            "outPlotFileWithIDs" : r"plotsWithIDs\SpainIDs_1.csv"
-        }
+# Create a dictionary that holds the relevant plot information
+fieldData = {
+        "csvfilename"         : "./samplePlots.csv",
+        "proj"                : "EPSG:3042",
+        "radius"              : 30,
+        "xcol"                : "CX",    
+        "ycol"                : "CY",
+        "outPlotFileWithIDs" : r"plotsWithIDs\SpainIDs_1.csv"
+}
         
-        # Specify the year of interest
-        year = 2019
+# Specify the year of interest
+year = 2019
         
-        # Create an instance of the Manager
-        myPlotToSat = PlotToSat(polygon,fieldData,year) 
+# Create an instance of the Manager
+myPlotToSat = PlotToSat(polygon,fieldData,year) 
         
-        # Add Earth Observation Collections of interest
-        myPlotToSat.addCollection("sentinel-1", True) 
-        myPlotToSat.addCollection("sentinel-2", 50  ) 
+# Add Earth Observation Collections of interest
+myPlotToSat.addCollection("sentinel-1", True) 
+myPlotToSat.addCollection("sentinel-2", 50  ) 
         
-        #Definition and exportation of outputs
-        myPlotToSat.exportFeatures("folderSpain1", "outfeaturevectors")  
+#Definition and exportation of outputs
+myPlotToSat.exportFeatures("folderSpain1", "outfeaturevectors")  
+```
 
 #### 3.1.1 <a id="secdefPar">  Definition of input parameters and creation of a PlotToSat instance 
 
