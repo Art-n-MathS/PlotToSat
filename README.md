@@ -164,9 +164,8 @@ myPlotToSat.addCollection("sentinel-2", 50  )
 #Definition and exportation of outputs
 myPlotToSat.exportFeatures("folderSpain1", "outfeaturevectors")  
 ```
-<div align="center">
-  <h5>Listing 1: This is the "PlotToSat_test1.ipynb" file, which contains a complete example code for extracting time-series EO data at plot locations using PlotToSat.</h4>
-</div>
+<p align="center"><em>Listing 1: This is the "PlotToSat_test1.ipynb" file, which contains a complete example code for extracting time-series EO data at plot locations using PlotToSat.</em></p>
+
 
 #### 3.1.1 <a id="secdefPar">  Definition of input parameters and creation of a PlotToSat instance 
 
