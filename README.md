@@ -20,7 +20,7 @@ PlotTosat exports twelve values per band per collection corresponding to
 the twelve calendar months. Standard deviation is also provided for
 quality control.
 
-Figure [1](#fig:workflow){reference-type="ref" reference="fig:workflow"}
+Figure [1](#figworkflow)
 shows the user-interface. The user-interface is divided into four main
 steps, along with two additional optional steps:
 
@@ -53,7 +53,7 @@ steps, along with two additional optional steps:
     recommend solutions e.g., defining how many plots will be exported
     in each file in Step 3.
 
-![Alt text](img/PlotToSatDiagram.jpg)
+![Alt text]<a id="figworkflow"></a> (img/PlotToSatDiagram.jpg)
 <a id="fig:workflow"></a>  <p align="center"><em>Figure 1: User's workflow of the system</em></p>
 
 The system is modular, consisting of multiple classes, yet the user's
