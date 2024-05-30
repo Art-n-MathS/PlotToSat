@@ -211,8 +211,7 @@ polygon = ee.Geometry.Polygon(
 The polygon of the 2nd example was generated using the \"*Draw Shape*\"
 feature in the Graphical User Interface (GUI) of GEE. The drawn polygon
 is saved in the Imports section, where the corresponding JavaScript code
-is provided (Figure [4](#fig:GEEPol){reference-type="ref"
-reference="fig:GEEPol"}). To translate the JavaScript code into Python
+is provided (Figure [2](#figGEEPol)). To translate the JavaScript code into Python
 API code, remove the 'var' declaration, the code enclosed between
 \"/\*\" and \"\*/\" (inclusive of \"/\*\" and \"\*/\"), and the
 semicolon \";\" at the end.
@@ -221,7 +220,7 @@ semicolon \";\" at the end.
 <table>
   <tr>
     <td>
-      <img src="img/drawpolygon.jpg" alt="Subfigure 1" style="width:100%">
+      <img id=#figGEEPol src="img/drawpolygon.jpg" alt="Subfigure 1" style="width:100%">
       <p align="center"><em>(a) How to draw a polygon in GEE</em></p>
     </td>
     <td>
