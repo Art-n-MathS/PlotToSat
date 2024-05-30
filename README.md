@@ -79,7 +79,7 @@ within Peninsular Spain.
 
 This user guide assumes basic knowledge of Google Earth Engine (GEE) and
 Python. A GEE account is also required:
-[\<https://code.earthengine.google.com/\>](<https://code.earthengine.google.com/>){.uri}.
+[\<https://code.earthengine.google.com/\>](<https://code.earthengine.google.com/>)
 
 [Important note:]{.underline} As per current regulations
 ([https://earthengine.google.com/noncommercial/]{.underline}), GEE is
@@ -101,7 +101,7 @@ other IDEs should also work but they have not been tested.
 
 The code is compatible with both Linux and Windows machines and is
 available at:
-[\<https://github.com/Art-n-MathS/PlotToSat\>](<https://github.com/Art-n-MathS/PlotToSat>){.uri}
+[\<https://github.com/Art-n-MathS/PlotToSat\>](<https://github.com/Art-n-MathS/PlotToSat>)
 
 Depending on your environment, you can install the dependencies as
 follows:
@@ -756,7 +756,7 @@ spectral-temporal signatures at a plot.</em></td>
 
 PlotToSat is released under the GNU General Public Licence, Version 3.
 The full description of the usage licence is available
-here:[\<https://github.com/Art-n-MathS/PlotToSat/blob/main/License.txt\>](<https://github.com/Art-n-MathS/PlotToSat/blob/main/License.txt>){.uri}
+here:[\<https://github.com/Art-n-MathS/PlotToSat/blob/main/License.txt\>](<https://github.com/Art-n-MathS/PlotToSat/blob/main/License.txt>)
 
 The following paper should be cited in every publication using
 PlotToSat: Miltiadou, M., Grieve, S., Ruiz-Benito, P., Astigarraga, J.,
@@ -765,7 +765,7 @@ for Generating Annual Time-Series from Sentinel-1 and Sentinel-2 at Each
 Plot Within a Plot Network for Machine Learning Applications *Computers
 & Geosciences*
 
-Link to paper: [\<url\>](<url>){.uri}
+Link to paper: [\<url\>](<url>)
 
 ## Acknowledgments
 
