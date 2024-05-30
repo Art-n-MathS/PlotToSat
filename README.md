@@ -1,9 +1,14 @@
-# PlotToSat: a tool for generating time-series signatures from Sentinel-1 and Sentinel-2 at field-based plots for Machine Learning Applications
-**Milto Miltiadou<sup>[1,*]</sup>, Stuart Grieve<sup>[2]</sup>, Paloma Ruiz Benito<sup>[3]</sup>, Verónica Cruz-Alonso<sup>[3]</sup>, Julen Astigarraga<sup>[3]</sup>, Julián Tijerín Triviño<sup>[3]</sup> and Emily Lines<sup>[1]</sup>** <br>
-[1] Department of Geography,	University of Cambridge <br>
-[2] School of Geography,	Queen Mary University of London <br>
-[3] Department of Life Sciences, Universidad de Alcalá <br>
+# Userguide for PlotToSat
+## A tool for generating time-series signatures from Sentinel-1 and Sentinel-2 at field-based plots for Machine Learning Applications
 
+The following paper should be cited in every publication using
+PlotToSat: Miltiadou, M., Grieve, S., Ruiz-Benito, P., Astigarraga, J.,
+Cruz-Alonso, V., Triviño, J.T., and Lines, E. (2024) PlotToSat: A Tool
+for Generating Annual Time-Series from Sentinel-1 and Sentinel-2 at Each
+Plot Within a Plot Network for Machine Learning Applications _Computers
+& Geosciences_
+
+Link to paper: [\<url\>](<url>)
 
 ## 1 <a id="secintroduction"></a>  Introduction 
 
@@ -193,8 +198,8 @@ Users interact with _PlotToSat_ class. To establish an instance of the _PlotToSa
 **A polygon is required for defining the study region.** Here two examples are given. The first example retrieves a database containing all countries and sets Spain as the study region:
 
 ```python
-    countries = ee.FeatureCollection('USDOS/LSIB_SIMPLE/2017')
-    polygon = countries.filter(ee.Filter.eq('country_na', 'Spain')) 
+countries = ee.FeatureCollection('USDOS/LSIB_SIMPLE/2017')
+polygon = countries.filter(ee.Filter.eq('country_na', 'Spain')) 
 ```
 
 The second example employs a series of coordinates to define a polygon:
@@ -252,7 +257,7 @@ existing file with the same name, and merging time-series with plot
 information will not be possible.** All the keys of the
 dictionary are mandatory. Here is an example of defining them:
 
-``` {#lst:inputs style="mystyle" label="lst:inputs"}
+```python
 fieldData = {
           "csvfilename"        : "./samplePlots.csv",
           "proj"               : "EPSG:3042",
@@ -268,14 +273,14 @@ year in each run. The year of interest must be defined and imported into
 the constructor of the *PlotToSat* class. In the code snippet below, we
 define a variable that contains a potential year of interest.
 
-``` {#lst:setYear style="mystyle" label="lst:setYear"}
+```python
 year = 2017 
 ```
 
 Once the three inputs are defined, you can **create an instance of
 PlotToSat** as follows:
 
-``` {#lst:defManager style="mystyle" label="lst:defManager"}
+```python
 myPlotToSat = PlotToSat(polygon,fieldData,year) 
 ```
 
@@ -286,14 +291,14 @@ their interest. If the available collections are not known, the
 following command can be used to print the available collections, their
 call labels, and the GEE collections fetched:
 
-``` {#lst:printAveCol style="mystyle" label="lst:printAveCol"}
+```python
 myPlotToSat.printAvailableCollections()
 ```
 
 This should yield the following outcome since the system currently
 supports two collections:
 
-``` {#lst:output style="mystyle" label="lst:output"}
+```python
 There are  2 collections available within the system:
    label                   collection
    0  sentinel-1            COPERNICUS/S1_GRD
@@ -320,7 +325,7 @@ example of how to add both collections to the *PlotToSat* class with
 aspect filters enabled for Sentinel-1 and an upper limit threshold of
 50% cloud coverage for Sentinel-2:
 
-``` {#lst:addCols style="mystyle" label="lst:addCols"}
+```python
 myPlotToSat.addCollection("sentinel-1", True) 
     myPlotToSat.addCollection("sentinel-2", 50  )  
 ```
@@ -338,7 +343,7 @@ Additionally, due to parallel processing, sometimes GEE creates two
 folders with the same name and shares the exported files between
 them.**
 
-``` {#lst:addCols style="mystyle" label="lst:addCols"}
+```python
 myPlotToSat.exportFeatures("gdrivefolder", "outfeaturevectors") 
 ```
 
@@ -354,80 +359,84 @@ For instructions on merging the series of CSV files, please refer to Section [3.
 
 ### 3.2 <a id="secoptCom">  Test Case 2: Optional commands
 
-Listing [\[lst:testCode2\]](#lst:testCode2){reference-type="ref"
-reference="lst:testCode2"} provides the code for test case 2 (code
+Listing [2](#lsttestCode2) provides the code for test case 2 (code
 available in the associated *PlotToSat_test2.ipynb* file), which
 includes the optional commands of PlotToSat. The optional commands added
 from test case 1 to test case 2 are explained in Sections [3.2.1](#secmaskscript) and [3.2.2](#secerrors).
 
-    [style=mystyle, caption={This is the "PlotToSat\_test1.ipynb" file, which contains a complete example code for extracting time-series EO data at plot locations using PlotToSat.} , label=lst:testCode2]
-        # Include these lines and comment out "ee.Authenticate()" after the 
-        # first use to avoid authentication at each run.
-        import ee
-        ee.Authenticate()
-        ee.Initialize()
-        import sys
+<a id="lsttestCode2"></a>
+```python
+# Include these lines and comment out "ee.Authenticate()" after the 
+# first use to avoid authentication at each run.
+import ee
+ee.Authenticate()
+ee.Initialize()
+import sys
         
-        # import all the necessary libraries
-        %run PlotToSat.ipynb
+# import all the necessary libraries
+%run PlotToSat.ipynb
         
-        # By default recursion is 1000. By increasing it PloToSat can handle 
-        # more plot data at once but you are doing it at your own risk as
-        # raising it too much could cause your personal computer to crash
-        sys.setrecursionlimit(10000)
+# By default recursion is 1000. By increasing it PloToSat can handle 
+# more plot data at once but you are doing it at your own risk as
+# raising it too much could cause your personal computer to crash
+sys.setrecursionlimit(10000)
         
-        # Definition of Study area
-        countries = ee.FeatureCollection('USDOS/LSIB_SIMPLE/2017')
-        polygon = countries.filter(ee.Filter.eq('country_na', 'Spain'))
+# Definition of Study area
+countries = ee.FeatureCollection('USDOS/LSIB_SIMPLE/2017')
+polygon = countries.filter(ee.Filter.eq('country_na', 'Spain'))
         
-        # Create a dictionary that holds the relevant plot information
-        fieldData = {
-            "csvfilename"         : "./samplePlots.csv",
-            "proj"                : "EPSG:3042",
-            "radius"              : 25,
-            "xcol"                : "CX",    
-            "ycol"                : "CY",
-            "outPlotFileWithIDs"  : r"plotsWithIDs\SpainIDs_2.csv"
-        }
+# Create a dictionary that holds the relevant plot information
+fieldData = {
+        "csvfilename"         : "./samplePlots.csv",
+        "proj"                : "EPSG:3042",
+        "radius"              : 25,
+        "xcol"                : "CX",    
+        "ycol"                : "CY",
+        "outPlotFileWithIDs"  : r"plotsWithIDs\SpainIDs_2.csv"
+}
         
-        # Specify the year of interest
-        year = 2020
+# Specify the year of interest
+year = 2020
         
-        # Create an instance of the PlotToSat class
-        myPlotToSat = PlotToSat(polygon,fieldData,year) 
+# Create an instance of the PlotToSat class
+myPlotToSat = PlotToSat(polygon,fieldData,year) 
         
-        # With this command you can see all the supported collections and the
-        # associated labels needed for adding them into the PlotToSat instance
-        myPlotToSat.printAvailableCollections()
+# With this command you can see all the supported collections and the
+# associated labels needed for adding them into the PlotToSat instance
+myPlotToSat.printAvailableCollections()
         
-        # Example of defining the optional masks
-        masks = {
-            "gsw"       : 30, 
-            "lmask"     : 30, 
-            "forestMask": {
-                "buffer"   :30, 
-                "startDate":'2000-01-01', 
-                "endDate"  :'2019-12-31'
-                }
-            } 
-        myPlotToSat.setMasks(masks)
+# Example of defining the optional masks
+masks = {
+    "gsw"       : 30, 
+    "lmask"     : 30, 
+    "forestMask": {
+            "buffer"   :30, 
+            "startDate":'2000-01-01', 
+            "endDate"  :'2019-12-31'
+            }
+        } 
+myPlotToSat.setMasks(masks)
         
-        # GEE limits processing of data, so PloToSat divides plots data into 
-        # groups. The default size of a group is 400 plots. A bigger number 
-        # produces less files to be merged and uses less GEE requests. But if 
-        # it is too big GEE returns an ERROR. So some testing is required here 
-        # to tune the sampling size. 
-        myPlotToSat.setSampling(300)
+# GEE limits processing of data, so PloToSat divides plots data into 
+# groups. The default size of a group is 400 plots. A bigger number 
+# produces less files to be merged and uses less GEE requests. But if 
+# it is too big GEE returns an ERROR. So some testing is required here 
+# to tune the sampling size. 
+myPlotToSat.setSampling(300)
         
-        # Adding Earth Observation Collections
-        myPlotToSat.addCollection("sentinel-1", False) 
-        myPlotToSat.addCollection("sentinel-2", 50  ) 
+# Adding Earth Observation Collections
+myPlotToSat.addCollection("sentinel-1", False) 
+myPlotToSat.addCollection("sentinel-2", 50  ) 
         
-        # Definition and exportation of outputs
-        myPlotToSat.exportFeatures("folderSpain2", "r25_2020")  
+# Definition and exportation of outputs
+myPlotToSat.exportFeatures("folderSpain2", "r25_2020")  
         
-        # Command for re-running a subgroup of plots in case of time-out Errors
-        myPlotToSat.exprtFeaturesMinMax("folderSpain2","r25_2020",300,600)   
+# Command for re-running a subgroup of plots in case of time-out Errors
+myPlotToSat.exprtFeaturesMinMax("folderSpain2","r25_2020",300,600)   
+```
+<p align="center"><em>{This is the PlotToSat_test2.ipynb file, which contains a complete example code for extracting time-series EO data at plot locations and incorporates the optional commands of PlotToSat.</em></p>
+
+
 
 #### 3.2.1 <a id="secmaskscript">  Available optional masks
 
@@ -515,17 +524,17 @@ mask from 2000 till 2017 with a 30 meter buffer. The masks dictionary,
 named \"*masks*\" is then added to the instance of the instance of the
 *PlotToSat* class, named \"*myPlotToSat*\".
 
-``` {#lst:defOptMasks style="mystyle" label="lst:defOptMasks"}
+```python
 masks = {
-          "gsw"       : 30, 
-          "lmask"     : 30, 
-          "forestMask": {
-                 "buffer"   :30, 
-                 "startDate":'2000-01-01', 
-                 "endDate"  :'2017-12-31'
-                  }
-            } 
-    myPlotToSat.setMasks(masks) 
+    "gsw"       : 30, 
+    "lmask"     : 30, 
+    "forestMask": {
+            "buffer"   :30, 
+            "startDate":'2000-01-01', 
+            "endDate"  :'2017-12-31'
+            }
+        } 
+myPlotToSat.setMasks(masks) 
 ```
 
 #### 3.2.2 <a id="secerrors"> Dealing with potential errors 
@@ -561,9 +570,9 @@ may result in slowdowns or even crashes. If you choose to use this
 option, it's important to understand its associated risks. The code for
 increasing the maximum depth as follows:
 
-``` {#lst:setRecursion style="mystyle" label="lst:setRecursion"}
+```python
 import sys
-    sys.setrecursionlimit(n) 
+sys.setrecursionlimit(n) 
 ```
 
 where 'n' represents the new recursion depth/limit. The default value is
@@ -580,7 +589,7 @@ sampling number, the number of GEE requests and exported files
 decreases. Here is an example of defining the number of plots per
 subgroup:
 
-``` {#lst:setSampliting style="mystyle" label="lst:setSampliting"}
+```python
 myPlotToSat.setSampling(n)  
 ```
 
@@ -611,9 +620,9 @@ subgroups**. Therefore, if multiple commands fail you need to
 divide the data into subgroups manually and run the command multiple
 times. An example is given below:
 
-``` {#lst:rerun style="mystyle" label="lst:rerun"}
+```python
 myPlotToSat.exprtFeaturesMinMax("folderSpain2", "r25_2020",300,600) 
-    myPlotToSat.exprtFeaturesMinMax("folderSpain2", "r25_2020",600,900)  
+myPlotToSat.exprtFeaturesMinMax("folderSpain2", "r25_2020",600,900)  
 ```
 
 Please do not rerun \"*myPlotToSat.exportFeatures(\<folder\>,
@@ -636,12 +645,10 @@ parallel data processing. In such cases, download both folders and merge
 their contents before proceeding with the script for file merging. Then,
 create a new .ipynb file in the same directory as PlotToSat's .ipynb
 files and import the necessary libraries (as shown in line 1 of Listing
-[\[lst:mergeCode\]](#lst:mergeCode){reference-type="ref"
-reference="lst:mergeCode"}). To execute the
+[3](#lstmergeCode)). To execute the
 \"*mergeAll(\<gdriveFolderDir\>, \<fieldDataWithIdentifiers\>)*\"
 command (as shown in line 5 of Listing
-[\[lst:mergeCode\]](#lst:mergeCode){reference-type="ref"
-reference="lst:mergeCode"}), you need to provide two input parameters:
+[3](#lstmergeCode)), you need to provide two input parameters:
 
 1.  The name and path directory of the local folder downloaded from your
     Google Drive, where the CSV files exported by PlotToSat and GEE are
@@ -649,12 +656,8 @@ reference="lst:mergeCode"}), you need to provide two input parameters:
 
 2.  The value assigned to the key \"*outPlotFileWithIDs*\" when
     generating the field-related dictionary (Section [3.1.1](#secdefPar)).
-    For example, in Listing
-    [\[lst:testCode1\]](#lst:testCode1){reference-type="ref"
-    reference="lst:testCode1"}, the value is
-    \"*plotsWithIDs/SpainIDs_1.csv*,\" and in Listing
-    [\[lst:testCode2\]](#lst:testCode2){reference-type="ref"
-    reference="lst:testCode2"}, it's \"*plotsWithIDs/SpainIDs_2.csv*.\"
+    For example, in Listing [1](#lsttestCode1), the value is
+    \"*plotsWithIDs/SpainIDs_1.csv*,\" and in Listing [2](#lsttestCode2), it's \"*plotsWithIDs/SpainIDs_2.csv*.\"
     These are file paths pointing to CSV files, each containing the
     related plot information with attached identifiers. As mentioned
     earlier, a different file path and CSV file name must be provided
@@ -664,12 +667,16 @@ reference="lst:mergeCode"}), you need to provide two input parameters:
 A full example code for merging the multiple exported CSV files is given
 here:
 
-    [style=mystyle, , caption={An example script of how to merge the multiple exported files on GEE}, label=lst:mergeCode]
-        %run MergingLib.ipynb
+<a id="lstmergeCode"></a>
+```python
+%run MergingLib.ipynb
         
-        gdriveFolderDir = r"C:\Documents\folderSpain2"
-        fieldDataWithIdentifiers = r"plotsWithIDs\SpainIDs_1.csv"
-        mergeAll(gdriveFolderDir,fieldDataWithIdentifiers) 
+gdriveFolderDir = r"C:\Documents\folderSpain2"
+fieldDataWithIdentifiers = r"plotsWithIDs\SpainIDs_1.csv"
+mergeAll(gdriveFolderDir,fieldDataWithIdentifiers) 
+```
+<p align="center"><em>Listing 3: An example script of how to merge the multiple exported files on GEE.</em></p>
+
 
 ##  4 <a id="secoutputs"> Outputs: What do you get and what does it mean 
 
@@ -775,4 +782,11 @@ Cambridge.
 P. R-B. and J. A. acknowledge funding from the CLIMB-FOREST Horizon
 Europe Project (No 101059888) that was funded by the European Union
 
-[^1]: Corresponding author and main programmer.
+
+## References
+
+Miltiadou, M., Grieve, S., Ruiz-Benito, P., Astigarraga, J.,
+Cruz-Alonso, V., Triviño, J.T., and Lines, E. (2024) PlotToSat: A Tool
+for Generating Annual Time-Series from Sentinel-1 and Sentinel-2 at Each
+Plot Within a Plot Network for Machine Learning Applications *Computers
+& Geosciences*
