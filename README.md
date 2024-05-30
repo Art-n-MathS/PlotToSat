@@ -220,7 +220,7 @@ semicolon \";\" at the end.
 <table>
   <tr>
     <td>
-      <img id=#figGEEPol src="img/drawpolygon.jpg" alt="Subfigure 1" style="width:100%">
+      <img id="figGEEPol" src="img/drawpolygon.jpg" alt="Subfigure 1" style="width:100%">
       <p align="center"><em>(a) How to draw a polygon in GEE</em></p>
     </td>
     <td>
