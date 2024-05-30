@@ -185,26 +185,21 @@ providing a credit card. As long as PlotToSat and, consequently GEE, are
 used for non-commercial purposes, as per current regulations, there are
 no associated charges. More info at Section [2](#secinstallation).
 
-``` {#lst:region style="mystyle" label="lst:region"}
+Users interact with _PlotToSat_ class. To establish an instance of the _PlotToSat_ class (Line 25 in Listing [1](#lsttestCode1), three inputs are required:
+- A polygon that defines the study area
+- A dictionary that contains all the relevant information about the field data
+- The specific year for exporting the spectral-temporal signatures
 
-    \par Users interact with \textit{PlotToSat} class. To establish an instance of the \textit{PlotToSat} class (Line 25 in Listing \ref{lst:testCode1}), three inputs are required:
-    \begin{enumerate}
-        \item A polygon that defines the study area
-        \item A dictionary that contains all the relevant information about the field data
-        \item The specific year for exporting the spectral-temporal signatures
-    \end{enumerate}
-  
+**A polygon is required for defining the study region.** Here two examples are given. The first example retrieves a database containing all countries and sets Spain as the study region:
 
-    
-    \par \textbf{A polygon is required for defining the study region.} Here two examples are given. The first example retrieves a database containing all countries and sets Spain as the study region:
-    \begin{lstlisting}[style=mystyle,  label=lst:regionCountry]
+```python
     countries = ee.FeatureCollection('USDOS/LSIB_SIMPLE/2017')
     polygon = countries.filter(ee.Filter.eq('country_na', 'Spain')) 
 ```
 
 The second example employs a series of coordinates to define a polygon:
 
-``` {#lst:regionCoordinates style="mystyle" label="lst:regionCoordinates"}
+```python
 polygon = ee.Geometry.Polygon(
               [[[-4.605333211514093, 40.525024941579744],
               [-6.022569539639093, 39.473043697488094],
