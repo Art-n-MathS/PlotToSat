@@ -724,8 +724,7 @@ is missing, then it is likely that the corresponding plot was located in
 a masked out area. If parts of the EO time-series are missing, it could
 be due to defects in data acquisition or due to cloud masking.
 
-Figure [8](#fig:timeseries){reference-type="ref"
-reference="fig:timeseries"} shows examples the Sentinel-1 and Sentinel-2
+Figure [4](#figtimeseries) shows examples the Sentinel-1 and Sentinel-2
 time-series of a single plot. There are four time-series per plot for
 Sentinel-1, corresponding to two polarisations (VV, VH) and two orbit
 direction (Ascending and Descending), resulting in four distinct options
@@ -733,6 +732,7 @@ when combined. A Sentinel-2 time-series forms a spectral-temporal
 signature that captures both the spectral and temporal characteristics
 of a plot.
 
+<div id="figtimeseries">
 <table>
   <tr>
     <td>
@@ -749,7 +749,7 @@ of a plot.
 spectral-temporal signatures at a plot.</em></td>
   </tr>
 </table>
-
+</div>
 
 
 ##  <a id="License"> License 
