@@ -645,10 +645,9 @@ parallel data processing. In such cases, download both folders and merge
 their contents before proceeding with the script for file merging. Then,
 create a new .ipynb file in the same directory as PlotToSat's .ipynb
 files and import the necessary libraries (as shown in line 1 of Listing
-[3](#lstmergeCode)). To execute the
-\"*mergeAll(\<gdriveFolderDir\>, \<fieldDataWithIdentifiers\>)*\"
-command (as shown in line 5 of Listing
-[3](#lstmergeCode)), you need to provide two input parameters:
+[3](#lstmergeCode)). First create an istance of the _MergingLib_ and then execute the
+\"*mergeAll()*\" command (as shown in line 5 of Listing
+[3](#lstmergeCode)). To create the _MergingLib_ istance, you need to provide two input parameters:
 
 1.  The name and path directory of the local folder downloaded from your
     Google Drive, where the CSV files exported by PlotToSat and GEE are
@@ -673,7 +672,8 @@ here:
         
 gdriveFolderDir = r"C:\Documents\folderSpain2"
 fieldDataWithIdentifiers = r"plotsWithIDs\SpainIDs_1.csv"
-mergeAll(gdriveFolderDir,fieldDataWithIdentifiers) 
+mergingTool = MergingLib(gdriveFolderDir,fieldDataWithIdentifiers)
+mergingTool.mergeAll()
 ```
 <p align="center"><em>Listing 3: An example script of how to merge the multiple exported files on GEE.</em></p>
 
