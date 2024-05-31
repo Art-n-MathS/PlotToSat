@@ -1,8 +1,9 @@
 # Userguide for PlotToSat
 ## A tool for generating time-series signatures from Sentinel-1 and Sentinel-2 at field-based plots for Machine Learning Applications
 
-The following paper should be cited in every publication using
-PlotToSat: Miltiadou, M., Grieve, S., Ruiz-Benito, P., Astigarraga, J.,
+The following associated paper should be cited in every publication using
+PlotToSat: 
+Miltiadou, M., Grieve, S., Ruiz-Benito, P., Astigarraga, J.,
 Cruz-Alonso, V., Triviño, J.T., and Lines, E. (2024) PlotToSat: A Tool
 for Generating Annual Time-Series from Sentinel-1 and Sentinel-2 at Each
 Plot Within a Plot Network for Machine Learning Applications _Computers
@@ -434,7 +435,7 @@ myPlotToSat.exportFeatures("folderSpain2", "r25_2020")
 # Command for re-running a subgroup of plots in case of time-out Errors
 myPlotToSat.exprtFeaturesMinMax("folderSpain2","r25_2020",300,600)   
 ```
-<p align="center"><em>{This is the PlotToSat_test2.ipynb file, which contains a complete example code for extracting time-series EO data at plot locations and incorporates the optional commands of PlotToSat.</em></p>
+<p align="center"><em>Listing 2: This is the PlotToSat_test2.ipynb file, which contains a complete example code for extracting time-series EO data at plot locations and incorporates the optional commands of PlotToSat.</em></p>
 
 
 
