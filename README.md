@@ -11,6 +11,8 @@ Plot Within a Plot Network for Machine Learning Applications _Computers
 
 Link to paper: [\<url\>](<url>)
 
+Link to YouTube tutorial: [\<https://youtu.be/KHLsJ6r5RiA\>](<https://youtu.be/KHLsJ6r5RiA>)
+
 ## 1 <a id="secintroduction"></a>  Introduction 
 
 
