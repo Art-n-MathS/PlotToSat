@@ -109,7 +109,12 @@ The code is compatible with both Linux and Windows machines and is
 available at:
 [\<https://github.com/Art-n-MathS/PlotToSat\>](<https://github.com/Art-n-MathS/PlotToSat>)
 
-In VS Code, you can install dependencies in a virtual environment as follows: 
+The dependencies are the following:
+``` {#lst:dependancies style="mystyle" label="lstdependancies"}
+nbformat folium ipython pandas numpy earthengine-api
+```
+
+In VS Code (Windows), you can install dependencies in a virtual environment as follows: 
 
 ``` {#lst:dependancies style="mystyle" label="lstdependancies"}
 python -m venv .venv
@@ -117,14 +122,6 @@ python -m venv .venv
 pip install nbformat folium ipython pandas numpy earthengine-api
 ```
 When running PlotToSat in VS Code, ensure you're using the Python version associated with the virtual environment, e.g., ★.venv (Python 3.16.6).
-
-If you're using Miniconda or Anaconda, you can use the following commands to install dependencies in a virtual envirnment:
-``` {#lst:dependancies style="mystyle" label="lstdependancies"}
-conda create --name myenv python=3.12
-conda activate myenv
-conda install -c conda-forge nbformat folium earthengine-api ipython pandas numpy  
-```
-Before running PlotToSat, please activate the environment with `conda activate myenv`.
 
 ## 3 <a id="secinstructions">  Instructions: How to extract time-series at plot locations 
 
