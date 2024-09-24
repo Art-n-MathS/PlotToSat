@@ -6,7 +6,7 @@ PlotToSat:
 Miltiadou, M., Grieve, S., Ruiz-Benito, P., Astigarraga, J.,
 Cruz-Alonso, V., Triviño, J.T., and Lines, E. (2024) PlotToSat: A Tool
 for Generating Annual Time-Series from Sentinel-1 and Sentinel-2 at Each
-Plot Within a Plot Network for Machine Learning Applications 
+Plot Within a Plot Network for Machine Learning Applications (under review)
 
 Link to paper: [\<url\>](<url>)
 
@@ -775,8 +775,7 @@ The following paper should be cited in every publication using
 PlotToSat: Miltiadou, M., Grieve, S., Ruiz-Benito, P., Astigarraga, J.,
 Cruz-Alonso, V., Triviño, J.T., and Lines, E. (2024) PlotToSat: A Tool
 for Generating Annual Time-Series from Sentinel-1 and Sentinel-2 at Each
-Plot Within a Plot Network for Machine Learning Applications *Computers
-& Geosciences*
+Plot Within a Plot Network for Machine Learning Applications (under review)
 
 Link to paper: [\<url\>](<url>)
 
