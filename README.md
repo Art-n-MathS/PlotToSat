@@ -316,7 +316,7 @@ The users select collections using the function
 *addCollection(\<labelOfCollection\>*, \<parameter\>). The system
 currently supports the Sentinel-1 and Sentinel-2 collections, with the
 respective labels *\"sentinel-1*\" and *\"sentinel-2\"*. The
-*\<parameter\>* argument serves a different purpose for each collection.
+*\<parameter\>* argument is user-defined and serves a different purpose for each collection.
 For Sentinel-2, it's an integer defining the upper limit threshold of
 cloud coverage. Images exceeding this threshold are discarded. It's
 worth mentioning that additional cloud and shadow masking is applied to
