@@ -114,7 +114,7 @@ The dependencies are the following:
 nbformat folium ipython pandas numpy earthengine-api ipykernel
 ```
 
-A Requirements file (requirements.txt) is provided to help you efficiently install all dependancies as follow: 
+A Requirements file (requirements.txt) is provided to help you install all dependencies efficiently as follow: 
 
 ``` {#lst:dependancies style="mystyle" label="lstdependancies"}
 pip install -r .\requirements.txt
