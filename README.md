@@ -336,9 +336,7 @@ Detailed information about the available collections and pre-processing
 steps are provided at the relevant paper [@miltiadou2024PlotToSat].
 
 Users have the choice to use either one or both collections. Here is an
-example of how to add both collections to the *PlotToSat* class with
-aspect filters enabled for Sentinel-1 and an upper limit threshold of
-50% cloud coverage for Sentinel-2:
+example of how to add both collections to the *PlotToSat* class. In this example, the user chose to apply the aspect filters on Sentinel-1 images, and an upper limit threshold of 50% cloud coverage was set for Sentinel-2:
 
 ```python
 myPlotToSat.addCollection("sentinel-1", True) 
