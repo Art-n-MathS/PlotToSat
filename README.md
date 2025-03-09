@@ -3,12 +3,9 @@
 
 The following associated paper should be cited in every publication using
 PlotToSat: 
-Miltiadou, M., Grieve, S., Ruiz-Benito, P., Astigarraga, J.,
-Cruz-Alonso, V., Triviño, J.T., and Lines, E. (2024) PlotToSat: A Tool
-for Generating Annual Time-Series from Sentinel-1 and Sentinel-2 at Each
-Plot Within a Plot Network for Machine Learning Applications (under review)
+Miltiadou, M., Grieve, S., Ruiz-Benito, P., Astigarraga, J., Cruz-Alonso, V., Triviño, J. T., & Lines, E. R. (2025). PlotToSat: A tool for generating time-series signatures from Sentinel-1 and Sentinel-2 at field-based plots for machine learning applications. Environmental Modelling & Software, 106395.
 
-Link to paper: [\<url\>](<url>)
+Link to paper: [\<[url](https://www.sciencedirect.com/science/article/abs/pii/S1364815225000799)\>](<[url](https://www.sciencedirect.com/science/article/abs/pii/S1364815225000799)>)
 
 Link to YouTube tutorial: [\<https://youtu.be/ItaZjmQlyhI>](<https://youtu.be/ItaZjmQlyhI>)
 
