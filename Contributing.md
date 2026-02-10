@@ -27,7 +27,7 @@ Thank you for your interest in contributing!
 
 
 
-# Guidelines
+## Guidelines
 - Follow existing code style
 - Write clear commit messages
 - Test your changes before submitting
