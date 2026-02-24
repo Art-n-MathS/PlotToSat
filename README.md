@@ -1,4 +1,4 @@
-# User guide for PlotToSat
+# U<img src="img/PlotToSat_logo_1.jpg" width="30"ser guide for PlotToSat
 ## A tool for generating time-series signatures from Sentinel-1 and Sentinel-2 at field-based plots for Machine Learning Applications
 
 The following associated paper should be cited in every publication using
