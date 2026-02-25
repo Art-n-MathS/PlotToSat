@@ -117,16 +117,16 @@ nbformat folium ipython pandas numpy earthengine-api ipykernel
 A Requirements file (requirements.txt) is provided to help you install all dependencies efficiently as follow: 
 
 ``` {#lst:dependancies style="mystyle" label="lstdependancies"}
-python -m venv .venv
-.venv\Scripts\activate
+python -m venv myenv
+myenv\Scripts\activate
 pip install -r .\requirements.txt
 ```
 
 Alternatively, in VS Code (Windows), you can install dependencies in a virtual environment as follows: 
 
 ``` {#lst:dependancies style="mystyle" label="lstdependancies"}
-python -m venv .venv
-.venv\Scripts\activate
+python -m venv myenv
+myenv\Scripts\activate
 pip install nbformat folium ipython pandas numpy earthengine-api ipykernel
 ```
 When running PlotToSat in VS Code, ensure you're using the Python kernel associated with the virtual environment, e.g., ".venv (Python 3.16.6)". There is a button in the top right corner of VS Code that indicates the active kernel. If you click on it, a list of available kernels will be displayed for you to choose from.
